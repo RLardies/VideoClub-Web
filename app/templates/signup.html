@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{ title }}
+{% endblock%}
+
+{% block content %}
+<body>
+
+<header>   
+<p>Sign Up</p>
+
+</header>
+
+<content>
+  <divform>
+    <form action="/action_page.php">
+      <label for="fname" style="color:#8e8be0">First Name</label>
+      <input type="text" id="fname" name="firstname" placeholder="Your name..">
+
+      <label for="lname" style="color:#8e8be0">Last Name</label>
+      <input type="text" id="lname" name="lastname" placeholder="Your last name..">
+      
+      <label for="username" style="color:#8e8be0">User Name</label>
+      <input type="text" id="username" name="username" placeholder="Your user name..">
+      
+      <label for="email" style="color:#8e8be0">Email</label>
+      <input type="text" id="email" name="email" placeholder="Your email..">
+      
+      <label for="pwd" style="color:#8e8be0">Password</label>
+      <input type="password" id="pwd" name="pwd" 
+placeholder="Insert your password..">
+
+      <label for="pwd" style="color:#8e8be0">Credit Card</label>
+      <input type="text" id="card" name="creditcard" 
+placeholder="Insert your credit card..">
+
+      <label for="gender" style="color:#8e8be0">Gender</label>
+      <select id="gender" name="gender">
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        <option value="notsay">Rather not say</option>
+      </select>
+
+      <input type="submit" value="Submit">
+    </form>
+  </divform>
+</content>
+
+ <aside>
+  <cattext>
+  <h1>Categories</h1>
+  </cattext>
+  <form>
+     <input type="textsearch" name="search" placeholder="Search..">
+  </form>
+  <ul class="cats">
+      <li><a href="#">Romántica</a></li>
+      <li><a href="#">Terror</a></li>
+      <li><a href="#">Acción</a></li>
+    </ul>
+ </aside>
+
+<footer>
+<p>Footer</p>
+</footer>
+
+
+</body>
+{% endblock %}

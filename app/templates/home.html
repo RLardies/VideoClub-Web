@@ -1,0 +1,206 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+<header> 
+  <nav>
+  	{% if not session['usuario'] %}
+  	<a href="{{url_for('signup') }}" style="color:#8e8be0">Sign up</a>
+  	{% endif %}
+  </nav>
+  <p>VideoClub</p>
+</header>
+
+<content>
+  <bodytext><h2>Catalogue</h2></bodytext>
+  	<bodycontent>
+    <!-- Photo Grid -->
+    <div class="row"> 
+      <div class="column">
+        <a href="#">
+          <div class="container">
+            <img src="/w3images/wedding.jpg" style="width:100%">
+            <div class="overlay">Wedding</div>
+         </div>
+       </a>
+       <a href="#">
+         <div class="container">
+           <img src="/w3images/rocks.jpg" style="width:100%">
+           <div class="overlay">Rocks</div>
+         </div>
+       </a>
+       <a href="#">
+         <div class="container">
+           <img src="/w3images/falls2.jpg" style="width:100%">
+           <div class="overlay">Falls</div>
+         </div>
+       </a>
+       <a href="#">
+         <div class="container">
+           <img src="/w3images/paris.jpg" style="width:100%">
+           <div class="overlay">Paris</div>
+         </div>
+       </a>
+       <a href="#">
+         <div class="container">
+           <img src="/w3images/nature.jpg" style="width:100%">
+           <div class="overlay">Nature</div>
+         </div>
+       </a>
+       <a href="#">
+         <div class="container">
+           <img src="/w3images/mist.jpg" style="width:100%">
+           <div class="overlay">Mist</div>
+         </div>
+       </a>
+       <a href="#">
+         <div class="container">
+           <img src="/w3images/paris.jpg" style="width:100%">
+           <div class="overlay">Paris</div>
+         </div>
+       </a>
+      </div>
+     <div class="column">
+       <a href="#">
+         <div class="container">
+           <img src="/w3images/underwater.jpg" style="width:100%">
+           <div class="overlay">Under water</div>
+         </div>
+       </a>
+       <a href="#">
+         <div class="container">
+           <img src="/w3images/ocean.jpg" style="width:100%">
+           <div class="overlay">Ocean</div>
+         </div>
+       </a>
+       <a href="#">
+         <div class="container">
+           <img src="/w3images/wedding.jpg" style="width:100%">
+           <div class="overlay">Wedding</div>
+         </div>
+       </a>
+       <a href="#">
+         <div class="container">
+           <img src="/w3images/mountainskies.jpg" style="width:100%">
+           <div class="overlay">Mountain Skies</div>
+         </div>
+       </a>
+       <a href="#">
+         <div class="container">
+           <img src="/w3images/rocks.jpg" style="width:100%">
+           <div class="overlay">Rocks</div>
+         </div>
+       </a>
+       <a href="#">
+         <div class="container">
+           <img src="/w3images/underwater.jpg" style="width:100%">
+           <div class="overlay">Underwater</div>
+         </div>
+       </a>
+      </div>  
+      <div class="column">
+        <a href="#">
+          <div class="container">
+            <img src="/w3images/wedding.jpg" style="width:100%">
+            <div class="overlay">Wedding</div>
+          </div>
+        </a>
+        <a href="#">
+          <div class="container">
+            <img src="/w3images/rocks.jpg" style="width:100%">
+            <div class="overlay">Rocks</div>
+          </div>
+        </a>
+        <a href="#">
+          <div class="container">
+            <img src="/w3images/falls2.jpg" style="width:100%">
+            <div class="overlay">Falls</div>
+          </div>
+        </a>
+        <a href="#">
+          <div class="container">
+            <img src="/w3images/paris.jpg" style="width:100%">
+            <div class="overlay">Paris</div>
+          </div>
+        </a>
+        <a href="#">
+          <div class="container">
+            <img src="/w3images/nature.jpg" style="width:100%">
+            <div class="overlay">Nature</div>
+          </div>
+        </a>
+        <a href="#">
+          <div class="container">
+            <img src="/w3images/mist.jpg" style="width:100%">
+            <div class="overlay">Mist</div>
+          </div>
+        </a>
+        <a href="#">
+          <div class="container">
+            <img src="/w3images/paris.jpg" style="width:100%">
+            <div class="overlay">Paris</div>
+          </div>
+        </a>
+      </div>
+      <div class="column">
+        <a href="#">
+          <div class="container">
+            <img src="/w3images/underwater.jpg" style="width:100%">
+            <div class="overlay">Under water</div>
+          </div>
+        </a>
+        <a href="#">
+          <div class="container">
+            <img src="/w3images/ocean.jpg" style="width:100%">
+            <div class="overlay">Ocean</div>
+          </div>
+        </a>
+        <a href="#">
+          <div class="container">
+            <img src="/w3images/wedding.jpg" style="width:100%">
+            <div class="overlay">Wedding</div>
+          </div>
+        </a>
+        <a href="#">
+          <div class="container">
+            <img src="/w3images/mountainskies.jpg" style="width:100%">
+            <div class="overlay">Falls</div>
+          </div>
+        </a>
+        <a href="#">
+          <div class="container">
+            <img src="/w3images/rocks.jpg" style="width:100%">
+            <div class="overlay">Rocks</div>
+          </div>
+        </a>
+        <a href="#">
+          <div class="container">
+            <img src="/w3images/underwater.jpg" style="width:100%">
+            <div class="overlay">Under water</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </bodycontent>
+</content>
+
+ <aside>
+   <cattext>
+     <h1>Categories</h1>
+   </cattext>
+   <form>
+    <input type="textsearch" name="search" placeholder="Search..">
+   </form>
+   <ul class="cats">
+     <li><a href="#" >Romántica</a></li>
+     <li><a href="#" >Terror</a></li>
+     <li><a href="#" >Acción</a></li>
+    </ul>
+ </aside>
+
+<footer>
+  <p>Footer</p>
+</footer>
+
+{% endblock %}
