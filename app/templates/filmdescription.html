@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+<body>
+
+<header> 
+  <nav>
+  	<a href="#" style="color:#8e8be0">Sign in</a>
+   	<a href="#" style="color:#8e8be0">Sign up</a>
+  </nav>
+  <p>VideoClub</p>
+</header>
+
+<content>
+  <bodytext><h2>Film Name</h2></bodytext>
+  <a class="cart-icon">
+    <span id="totalItems">0</span>
+    <ul class="cart"></ul>
+  </a>
+  <descr>
+    <img id="myImg" src="/w3images/wedding.jpg" alt="Wedding" style="width:100%;max-width:300px">
+    <button class="button">Agregar a cesta</button>
+    <p style="margin-right:10px;"> Armado con tan solo una palabra –Tenet– el protagonista de esta historia deberá pelear por la supervivencia del mundo entero en una misión que le lleva a viajar a través del oscuro mundo del espionaje internacional, y cuya experiencia se desdoblará más allá del tiempo lineal. (FILMAFFINITY)</p>
+
+    <div id="myModal" class="modal">
+      <span class="close">&times;</span>
+      <img class="modal-content" id="img01">
+      <div id="caption"></div>
+      <script src="imageclick.js"></script>
+    </div>
+  </descr>
+</content>
+
+ <aside>
+   <cattext>
+    <h1>Categories</h1>
+   </cattext>
+
+   <form>
+    <input type="textsearch" name="search" placeholder="Search..">
+   </form>
+
+   <ul>
+     <li><a href="#" style="color:#8e8be0">Romántica</a></li>
+     <li><a href="#" style="color:#8e8be0">Terror</a></li>
+     <li><a href="#" style="color:#8e8be0">Acción</a></li>
+    </ul>
+ </aside>
+
+<footer>
+  <p>Footer</p>
+</footer>
+
+
+</body>
+</html>
+
+{% endblock %}
