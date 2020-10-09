@@ -22,7 +22,7 @@
     <!-- Photo Grid -->
     <div class="row"> 
       <div class="column">
-        <a href="#">
+        <a href="{{ url_for('filmdescription') }}">
           <div class="container">
             <img src="/w3images/wedding.jpg" style="width:100%">
             <div class="overlay">Wedding</div>
@@ -193,9 +193,12 @@
    <cattext>
      <h1>Categories</h1>
    </cattext>
-   <form>
+   <form  >
     <input type="textsearch" name="search" placeholder="Search..">
    </form>
+
+   
+
    <ul class="cats">
      <li><a href="#" >Romántica</a></li>
      <li><a href="#" >Terror</a></li>
