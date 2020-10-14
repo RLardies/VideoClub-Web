@@ -19,7 +19,14 @@
         <a href="{{ url_for('logout') }}" style="color:#8e8be0">Log out</a></div>
         <span style="color:#8e8be0">Usuario: {{ session['usuario'] }}</span>
         {% endif%}
+
+        <a class="cart-icon">
+            <span id="totalItems">0</span>
+        <ul class="cart"></ul>
+         </a>
     </div>
+
+
     {% block content%} {% endblock %}
 </body>
 </html>

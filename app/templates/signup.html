@@ -7,6 +7,8 @@
 {% block content %}
 <body>
 
+<script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js%22%3E"></script>
+
 <header>   
 <p>Sign Up</p>
 
@@ -32,6 +34,7 @@
         placeholder="Insert your password..">
 
       <label for="creditcard" style="color:#8e8be0">Credit Card</label>
+      <label id="password-strength-text" ></label>
       <input type="text" id="creditcard" name="creditcard" 
         placeholder="Insert your credit card..">
 
@@ -55,10 +58,10 @@
      <input type="textsearch" name="search" placeholder="Search..">
   </form>
   <ul class="cats">
-      <li><a href="#">Romántica</a></li>
-      <li><a href="#">Terror</a></li>
-      <li><a href="#">Acción</a></li>
-    </ul>
+    {% for category in categories %}
+      <li><a href="{{ url_for('category') }}" >{{ category }}</a></li>
+    {% endfor %} 
+  </ul>
  </aside>
 
 <footer>

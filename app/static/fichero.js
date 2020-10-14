@@ -1,15 +1,16 @@
-var fname = document.getElementById("fname").value;
-var lname = document.getElementById("lname").value;
-var username = document.getElementById("username").value;
-var email = document.getElementById("email").value;
-var pwd = document.getElementById("pwd").value;
-var creditcard = document.getElementById("creditcard").value;
-var gender = document.getElementById("campo").selectedIndex;
+
 
 function validacion(){
 
-	if(fname == null || fname.length == 0 || /^\s+$/.test(fname)){
+	var fname = document.getElementById("fname").value;
+	var lname = document.getElementById("lname").value;
+	var username = document.getElementById("username").value;
+	var email = document.getElementById("email").value;
+	var pwd = document.getElementById("pwd").value;
+	var creditcard = document.getElementById("creditcard").value;
+	var gender = document.getElementById("gender").selectedIndex;
 
+	if(fname == null || fname.length == 0 || /^\s+$/.test(fname)){
 		alert('[ERROR] El campo debe tener un nombre valido');
 		return false;
 	}
@@ -44,4 +45,27 @@ function validacion(){
 	}
 
 	return true;
+}
+
+function ventanaNueva(){ 
+	window.open('home','nuevaVentana','width=300, height=400')
+}
+
+$(document).ready(function() {
+
+   $('#pwd').on('change keyup paste', function() {
+
+   $('#password-strength-text').html(checkStrength($('#pwd').val()))
+
+})
+
+function checkStrength(password) {
+
+	if (password.length < 10){
+		return "Too short";
+	}
+	else {
+		return "Strong";
+	}
+
 }

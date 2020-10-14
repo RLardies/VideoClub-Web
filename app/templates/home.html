@@ -14,10 +14,7 @@
 
 <content>
   <bodytext><h2>Catalogue</h2></bodytext>
-  <a class="cart-icon">
-    <span id="totalItems">0</span>
-    <ul class="cart"></ul>
-  </a>
+  
   <bodycontent>
     <!-- Photo Grid -->
     <div class="row"> </div>
@@ -26,25 +23,27 @@
   </bodycontent>
 </content>
 
- <aside>
-   <cattext>
-     <h1>Categories</h1>
-   </cattext>
-   <form  >
-    <input type="textsearch" name="search" placeholder="Search..">
-   </form>
+  <aside>
+    <cattext>
+      <h1>Categories</h1>
+    </cattext>
+    <form  >
+     <input type="textsearch" name="search" placeholder="Search..">
+    </form>
 
    
 
-   <ul class="cats">
-     <li><a href="#" >Romántica</a></li>
-     <li><a href="#" >Terror</a></li>
-     <li><a href="#" >Acción</a></li>
+    <ul class="cats">
+      {% for category in categories %}
+        <li><a href="{{ url_for('category', nombre = category )}}" >{{ category }}</a></li>
+      {% endfor %} 
     </ul>
+
+    
  </aside>
 
 <footer>
-  <p>Footer</p>
+  <h1>Footer</h1>
 </footer>
 
 {% endblock %}

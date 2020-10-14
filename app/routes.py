@@ -18,12 +18,20 @@ import itertools
 #    catalogue = json.loads(catalogue_data)
 #    return render_template('index.html', title = "Home", movies=catalogue['peliculas'])
 
+    
+
 @app.route('/home')
 def home():
     print (url_for('static', filename='estilo.css'), file=sys.stderr)
     catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
     catalogue = json.loads(catalogue_data)
-    return render_template('home.html', title = "Home", movies=catalogue['peliculas'])
+    categories = []
+
+    for movie in catalogue['peliculas']:
+        if movie['categoria'] not in categories:
+            categories.append(movie['categoria'])
+    
+    return render_template('home.html', title = "Home", movies=catalogue['peliculas'], categories=categories)
 
 
 
@@ -124,8 +132,20 @@ def signup():
 @app.route('/filmdescription', methods=['GET', 'POST'])
 def filmdescription():
 
+
+    
+
     description = "Armado con tan solo una palabra –Tenet– el protagonista de esta historia deberá pelear por la supervivencia del mundo entero en una misión que le lleva a viajar a través del oscuro mundo del espionaje internacional, y cuya experiencia se desdoblará más allá del tiempo lineal. (FILMAFFINITY)"
 
     title = "La guerra de las galaxias"
     
     return render_template('filmdescription.html', title = title, description= description)
+
+
+
+@app.route('/category', methods=['GET', 'POST'])
+def category():
+
+    title =  request.args.get('nombre')
+    
+    return render_template('category.html', title = title)
