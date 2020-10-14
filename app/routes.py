@@ -3,6 +3,7 @@
 
 from app import app
 from flask import render_template, request, url_for, redirect, session
+import jinja2
 import json
 import os
 import sys
