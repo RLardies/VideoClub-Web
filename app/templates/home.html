@@ -6,7 +6,7 @@
 <header> 
   <nav>
   	{% if not session['usuario'] %}
-  	<a href="{{url_for('signup') }}" style="color:#8e8be0">Sign up</a>
+  	<a href="{{url_for('signup') }}">Sign up</a>
   	{% endif %}
   </nav>
   <p>VideoClub</p>
@@ -15,7 +15,6 @@
 <content>
   <bodytext><h2>Catalogue</h2></bodytext>
   
-  <bodycontent>
     <div class="row">
       <div class="column1"> </div>
       <div class="column2"> </div>
@@ -23,52 +22,37 @@
       <div class="column4"> </div>
 
     </div>
-    <script>
+     <script>
     
       var len = Object.keys({{ movies|tojson }}).length;
-      var elemscolumn = Math.ceil(len/4);
+      var elemscolumn = 4;
       var colnum = 1;
       var i = 1;
+
+  
     </script>
 
     {% for item in movies %}
+
+    <a id='{{ item.id }}' href="{{url_for('filmdescription', id=item.id) }}"></a>
+
       <script>
-        if (i % (elemscolumn+1) != 0) {
-          show({{ item.titulo|tojson }}, {{ item.poster|tojson }}, colnum);
+
+        if (i % (elemscolumn) != 0) {
+          show({{ item.titulo|tojson }}, {{ item.poster|tojson }}, colnum, {{item.id }});
           i += 1;
           colnum +=1;
         }
         else{
-          show({{ item.titulo|tojson }}, {{ item.poster|tojson }}, colnum);
-          i += 1;
+          show({{ item.titulo|tojson }}, {{ item.poster|tojson }}, colnum, {{ item.id }});
+          i = 1;
           colnum = 1;
         }
       </script>
     {% endfor %}  
-  </bodycontent>
-</content>
+  </content>
 
-  <aside>
-    <cattext>
-      <h1>Categories</h1>
-    </cattext>
-    <form  >
-     <input type="textsearch" name="search" placeholder="Search..">
-    </form>
+ 
 
-   
-
-    <ul class="cats">
-      {% for category in categories %}
-        <li><a href="{{ url_for('category', nombre = category )}}" >{{ category }}</a></li>
-      {% endfor %} 
-    </ul>
-
-    
- </aside>
-
-<footer>
-  <h1>Footer</h1>
-</footer>
 
 {% endblock %}

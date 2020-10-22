@@ -1,9 +1,8 @@
 
 
-function show(titulo, poster, colnum) {
+function show(titulo, poster, colnum, id) {
 
-  var link = document.createElement("a");
-  link.href = "filmdescription";
+  var link = document.getElementById(id);
   let columna = ".column"+colnum.toString();
   let div = document.querySelector(columna);
   div.appendChild(link);

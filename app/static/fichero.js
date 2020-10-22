@@ -28,12 +28,12 @@ function validacion(){
 		return false;
 	}
 
-	if( !(/\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)/.test(email)) ) {
+	if( /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/.test(email) == false)  {
 		alert('[ERROR] El correo introducido no es valido');
  		return false;
 	}
 
-	if( pwd == null || pwd.length < 8 || /^\s+$/.test(pwd)) {
+	if( pwd == null || pwd.length < 7 || /^\s+$/.test(pwd)) {
 		alert('[ERROR] El correo introducido no es valido');
  		return false;
 	}
@@ -47,9 +47,10 @@ function validacion(){
 	return true;
 }
 
-function ventanaNueva(){ 
+/*function ventanaNueva(){ 
 	window.open('home','nuevaVentana','width=300, height=400')
 }
+*/
 
 $(document).ready(function() {
 
@@ -57,15 +58,28 @@ $(document).ready(function() {
 
    $('#password-strength-text').html(checkStrength($('#pwd').val()))
 
-})
+})})
 
 function checkStrength(password) {
 
-	if (password.length < 10){
+	var strongRegex = new RegExp("^(?=.{8,})(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*\\W).*$", "g");
+    var mediumRegex = new RegExp("^(?=.{7,})(((?=.*[A-Z])(?=.*[a-z]))|((?=.*[A-Z])(?=.*[0-9]))|((?=.*[a-z])(?=.*[0-9]))).*$", "g");
+    var enoughRegex = new RegExp("(?=.{6,}).*", "g");
+
+	if (enoughRegex.test(password) == false){
+		$('#password-strength-text').css("color","#FF0000")
 		return "Too short";
 	}
-	else {
-		return "Strong";
+	else  if( strongRegex.test(password)){
+		$('#password-strength-text').css("color","#008F39")
+		return "Strong"
+	}
+	else  if( mediumRegex.test(password)){
+		$('#password-strength-text').css("color","#E5BE01")
+		return "Medium"
+	} else{
+		$('#password-strength-text').css("color","#FF0000")
+		return "Weak"
 	}
 
 }

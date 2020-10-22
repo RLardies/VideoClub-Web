@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from app import app
-from flask import render_template, request, url_for, redirect, session
+from flask import render_template, request, url_for, redirect, session, flash
 import jinja2
 import json
 import os
@@ -10,6 +10,27 @@ import sys
 import hashlib
 from random import randint
 import itertools
+
+
+def getMovies():
+    catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
+    catalogue = json.loads(catalogue_data)
+
+    return catalogue['peliculas']
+
+def getCategories():
+    catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
+    catalogue = json.loads(catalogue_data)
+
+    categories = []
+
+    for movie in catalogue['peliculas']:
+        if movie['categoria'] not in categories:
+            categories.append(movie['categoria'])
+    
+    return categories
+
+
 
 @app.route('/')
 #@app.route('/index')
@@ -32,7 +53,7 @@ def home():
         if movie['categoria'] not in categories:
             categories.append(movie['categoria'])
     
-    return render_template('home.html', title = "Home", movies=catalogue['peliculas'], categories=categories)
+    return render_template('home.html', title = "Home", movies=catalogue['peliculas'], categories=getCategories())
 
 
 
@@ -67,20 +88,20 @@ def login():
 
             else:
                 #Algo de contraseña invalida
-                return render_template('login.html', title = "Sign In")
+                return render_template('login.html', title = "Sign In", categories=getCategories())
         
         else:
             # aqui se le puede pasar como argumento un mensaje de login invalido
 
             #USUARIO NO EXISTE
-            return render_template('login.html', title = "Sign In")
+            return render_template('login.html', title = "Sign In", categories=getCategories())
     else:
         # se puede guardar la pagina desde la que se invoca 
         session['url_origen']=request.referrer
         session.modified=True        
         # print a error.log de Apache si se ejecuta bajo mod_wsgi
         print (request.referrer, file=sys.stderr)
-        return render_template('login.html', title = "Sign In")
+        return render_template('login.html', title = "Sign In", categories=getCategories())
 
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
@@ -101,6 +122,7 @@ def signup():
 
             #Meter mensaje de error
             #Usuario ya existe
+            flash("Ya existe el usuario")
             return render_template('signup.html', title = "Sign Up")
 
         else:
@@ -123,24 +145,28 @@ def signup():
             session['usuario'] = request.form['username']
             session.modified=True
 
-            return render_template('home.html')
+            return render_template('home.html', movies = getMovies(), categories=getCategories())
         
     else:
-        return render_template('signup.html', title = "Sign Up")
+        return render_template('signup.html', title = "Sign Up", )
 
 
 
 @app.route('/filmdescription', methods=['GET', 'POST'])
 def filmdescription():
 
+    catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
+    catalogue = json.loads(catalogue_data)
 
-    
+    movie_id =  request.args.get('id')
 
-    description = "Armado con tan solo una palabra –Tenet– el protagonista de esta historia deberá pelear por la supervivencia del mundo entero en una misión que le lleva a viajar a través del oscuro mundo del espionaje internacional, y cuya experiencia se desdoblará más allá del tiempo lineal. (FILMAFFINITY)"
+    film = []
 
-    title = "La guerra de las galaxias"
-    
-    return render_template('filmdescription.html', title = title, description= description)
+    for item in catalogue['peliculas']:
+        if item['id'] == int(movie_id):
+            break
+
+    return render_template('filmdescription.html', title = item['titulo'], movie = item, categories=getCategories())
 
 
 
@@ -148,5 +174,37 @@ def filmdescription():
 def category():
 
     title =  request.args.get('nombre')
+
+    catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
+    catalogue = json.loads(catalogue_data)
+
+    movies = []
+
+    for movie in catalogue['peliculas']:
+        if movie['categoria'] == title:
+            movies.append(movie)
+
+
     
-    return render_template('category.html', title = title)
+    return render_template('category.html', title = title, movies=movies, categories= getCategories())
+
+@app.route('/historial', methods=['GET', 'POST'])
+def historial():
+
+    if session['usuario'] != None:
+
+        route = "users/" + session['usuario'] + "/historial.json"
+        file = "app/"+ route
+
+        if os.path.isfile(file):
+
+            historial_data = open(os.path.join(app.root_path, route), encoding="utf-8").read()
+            historial = json.loads(historial_data)
+
+            return render_template('historial.html', title='Historial de Compra', movies=historial, categories=getCategories())
+
+        else:
+            return render_template('historial.html', title='Historial de Compra',msg="No se ha realizado ninguna compra", categories=getCategories())
+    
+    else:
+        return redirect(url_for('home'))

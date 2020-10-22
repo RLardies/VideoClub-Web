@@ -7,52 +7,42 @@
 
 <header> 
   <nav>
-  	<a href="#" style="color:#8e8be0">Sign in</a>
-   	<a href="#" style="color:#8e8be0">Sign up</a>
+   	<a href="{{ url_for('signup') }}" >Sign up</a>
   </nav>
   <p>VideoClub</p>
 </header>
 
 <content>
-  <bodytext><h2>{{ title }}</h2></bodytext>
-  <a class="cart-icon">
-    <span id="totalItems">0</span>
-    <ul class="cart"></ul>
-  </a>
+
+  <bodytext><h2>{{ movie.titulo }}</h2></bodytext>
+ 
+
+
   <descr>
-    <img id="myImg" src="/w3images/wedding.jpg" alt="Wedding" style="width:100%;max-width:300px">
+    <img id="myImg" src="{{ movie.poster }}" alt="{{ movie.titulo }}">
+
     <button class="button" onclick="ventanaNueva()">Agregar a cesta</button>
-    <p style="margin-right:10px;"> {{ description }}</p>
+
+    <p > Precio: {{ movie.precio }}</p>
+    <p > Año: {{ movie.año }}</p>
+    <p > Director: {{ movie.director }}</p>
+    <p > Categoría: {{ movie.categoria }}</p>
 
     <div id="myModal" class="modal">
       <span class="close">&times;</span>
       <img class="modal-content" id="img01">
       <div id="caption"></div>
-      <script src="imageclick.js"></script>
+      
+
+
+      <script >
+        imageClick();
+      </script>
     </div>
-  </descr>
+
+  
 </content>
 
- <aside>
-   <cattext>
-    <h1>Categories</h1>
-   </cattext>
-
-   <form>
-    <input type="textsearch" name="search" placeholder="Search..">
-   </form>
-
-   <ul class="cats">
-    {% for category in categories %}
-     <li><a href="{{ url_for('category') }}" >{{ category }}</a></li>
-    {% endfor %}
-     
-    </ul>
- </aside>
-
-<footer>
-  <p>Footer</p>
-</footer>
 
 
 </body>

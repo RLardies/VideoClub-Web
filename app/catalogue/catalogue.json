@@ -6,7 +6,7 @@
       "poster": "../static/images/baby-driver.jpg",
       "director": "George Lucas",
       "precio": 18.99,
-      "categoria": "Aventura",
+      "categoria": "Accion",
       "año": 1999,
       "actores": 
       [
@@ -38,7 +38,7 @@
       "poster": "../static/images/avatar.jpg",
       "director": "George Lucas",
       "precio": 18.99,
-      "categoria": "Aventura",
+      "categoria": "Ciencia Ficcion",
       "año": 1999,
       "actores": 
       [
@@ -54,7 +54,7 @@
       "poster": "../static/images/fight-club.jpg",
       "director": "George Lucas",
       "precio": 18.99,
-      "categoria": "Aventura",
+      "categoria": "Drama",
       "año": 1999,
       "actores": 
       [
@@ -70,7 +70,7 @@
       "poster": "../static/images/harry-potter.jpg",
       "director": "George Lucas",
       "precio": 18.99,
-      "categoria": "Aventura",
+      "categoria": "Ciencia Ficcion",
       "año": 1999,
       "actores": 
       [
@@ -102,7 +102,7 @@
       "poster": "../static/images/passengers.jpg",
       "director": "George Lucas",
       "precio": 18.99,
-      "categoria": "Aventura",
+      "categoria": "Drama",
       "año": 1999,
       "actores": 
       [
@@ -118,7 +118,7 @@
       "poster": "../static/images/cisne-negro.jpg",
       "director": "George Lucas",
       "precio": 18.99,
-      "categoria": "Aventura",
+      "categoria": "Drama",
       "año": 1999,
       "actores": 
       [
@@ -134,7 +134,7 @@
       "poster": "../static/images/baby-driver.jpg",
       "director": "George Lucas",
       "precio": 18.99,
-      "categoria": "Aventura",
+      "categoria": "Ciencia Ficcion",
       "año": 1999,
       "actores": 
       [
@@ -150,7 +150,7 @@
       "poster": "../static/images/malefica.jpg",
       "director": "George Lucas",
       "precio": 18.99,
-      "categoria": "Aventura",
+      "categoria": "Ciencia Ficcion",
       "año": 1999,
       "actores": 
       [
@@ -166,7 +166,7 @@
       "poster": "../static/images/avengers.jpg",
       "director": "George Lucas",
       "precio": 18.99,
-      "categoria": "Aventura",
+      "categoria": "Ciencia Ficcion",
       "año": 1999,
       "actores": 
       [

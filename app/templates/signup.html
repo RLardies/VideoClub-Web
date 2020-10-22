@@ -6,8 +6,7 @@
 
 {% block content %}
 <body>
-
-<script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js%22%3E"></script>
+   <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 <header>   
 <p>Sign Up</p>
@@ -17,56 +16,38 @@
 <content>
   <divform>
     <form onsubmit="validacion()" action="{{url_for('signup') }}" method="post" >
-      <label for="fname" style="color:#8e8be0">First Name</label>
+      <label for="fname" >First Name</label>
       <input type="text" id="fname" name="firstname" placeholder="Your name..">
 
-      <label for="lname" style="color:#8e8be0">Last Name</label>
+      <label for="lname" >Last Name</label>
       <input type="text" id="lname" name="lastname" placeholder="Your last name..">
       
-      <label for="username" style="color:#8e8be0">User Name</label>
+      <label for="username" >User Name</label>
       <input type="text" id="username" name="username" placeholder="Your user name..">
       
-      <label for="email" style="color:#8e8be0">Email</label>
+      <label for="email" >Email</label>
       <input type="text" id="email" name="email" placeholder="Your email..">
       
-      <label for="pwd" style="color:#8e8be0">Password</label>
+      <label for="pwd" >Password</label>
       <input type="password" id="pwd" name="pwd" 
         placeholder="Insert your password..">
+      <span id="password-strength-text" >Too short</span><br><br>
 
-      <label for="creditcard" style="color:#8e8be0">Credit Card</label>
-      <label id="password-strength-text" ></label>
+      <label for="creditcard" >Credit Card</label>
       <input type="text" id="creditcard" name="creditcard" 
         placeholder="Insert your credit card..">
 
-      <label for="gender" style="color:#8e8be0">Gender</label>
+      <label for="gender" >Gender</label>
       <select id="gender" name="gender">
+        <option value="notsay">Rather not say</option>
         <option value="male">Male</option>
         <option value="female">Female</option>
-        <option value="notsay">Rather not say</option>
       </select>
 
       <input type="submit" value="Submit">
     </form>
   </divform>
 </content>
-
- <aside>
-  <cattext>
-  <h1>Categories</h1>
-  </cattext>
-  <form>
-     <input type="textsearch" name="search" placeholder="Search..">
-  </form>
-  <ul class="cats">
-    {% for category in categories %}
-      <li><a href="{{ url_for('category') }}" >{{ category }}</a></li>
-    {% endfor %} 
-  </ul>
- </aside>
-
-<footer>
-<p>Footer</p>
-</footer>
 
 
 </body>

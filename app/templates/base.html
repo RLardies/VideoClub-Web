@@ -5,29 +5,60 @@
     <title>{% block title %} {% endblock %}- VideoClub</title>
     <!-- Uso de url_for para obtener la ruta de elementos de la página -->
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='estilo.css') }}">
-    <script type="text/javascript" src="{{ url_for('static', filename='fichero.js') }}"></script>
+    <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript" defer src="{{ url_for('static', filename='fichero.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='showcatalogue.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='imageclick.js') }}"></script>
+    
+    <a class="cart-icon">
+        <span id="totalItems">1</span>
+        <ul class="cart"></ul>
+    </a>
 
 
 </head>
 <body>
     <div>
-        <a href="{{ url_for('home') }}" style="color:#8e8be0">Home</a>
+        <a href="{{ url_for('home') }}" >Home</a>
         {% if not session['usuario'] %}
-        <a href="{{ url_for('login') }}" style="color:#8e8be0">Sign In</a></div>
-        <span style="color:#8e8be0">Usuario: An&oacutenimo</span>
+        <a href="{{ url_for('login') }}" >Sign In</a></div>
+        <span >Usuario: An&oacutenimo</span>
         {% else %}
-        <a href="{{ url_for('logout') }}" style="color:#8e8be0">Log out</a></div>
-        <span style="color:#8e8be0">Usuario: {{ session['usuario'] }}</span>
+        <a href="{{ url_for('logout') }}">Log out</a></div>
+        <span >Usuario: {{ session['usuario'] }}</span>
         {% endif%}
-
-        <a class="cart-icon">
-            <span id="totalItems">0</span>
-        <ul class="cart"></ul>
-         </a>
-    </div>
 
 
     {% block content%} {% endblock %}
 </body>
+
+<aside>
+    <cattext>
+      <h1>Categories</h1>
+    </cattext>
+    <form  >
+     <input type="textsearch" name="search" placeholder="Search..">
+    </form>
+
+   
+
+    <ul class="cats">
+      {% for category in categories %}
+        <li><a href="{{ url_for('category', nombre = category )}}" >{{ category }}</a></li>
+      {% endfor %} 
+    </ul>
+
+    {% if  session['usuario'] %}
+        <a id=historial href="{{ url_for('historial') }}" >Historial</a></div>
+    {% endif%}
+
+    
+</aside>
+
+
+<footer>
+  <h1>Footer</h1>
+</footer>
+
+
 </html>
