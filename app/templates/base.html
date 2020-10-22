@@ -10,9 +10,8 @@
     <script type="text/javascript" src="{{ url_for('static', filename='showcatalogue.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='imageclick.js') }}"></script>
     
-    <a class="cart-icon">
+    <a class="cart-icon" href="{{url_for('carrito')}}">
         <span id="totalItems">1</span>
-        <ul class="cart"></ul>
     </a>
 
 

@@ -48,6 +48,11 @@ def home():
     catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
     catalogue = json.loads(catalogue_data)
     categories = []
+    session['carrito'] = []
+    session['precio'] = 0
+    session['num_productos_car'] = []
+    for num_movies in range(len(catalogue['peliculas'])):
+        session['num_productos_car'].append(0)
 
     for movie in catalogue['peliculas']:
         if movie['categoria'] not in categories:
@@ -158,9 +163,7 @@ def filmdescription():
     catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
     catalogue = json.loads(catalogue_data)
 
-    movie_id =  request.args.get('id')
-
-    film = []
+    movie_id =  request.args.get('movie_id')
 
     for item in catalogue['peliculas']:
         if item['id'] == int(movie_id):
@@ -168,7 +171,30 @@ def filmdescription():
 
     return render_template('filmdescription.html', title = item['titulo'], movie = item, categories=getCategories())
 
+@app.route('/filmdescription/<movie_id>_buy', methods=['GET', 'POST'])
+def comprar(movie_id):
 
+    catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
+    catalogue = json.loads(catalogue_data)
+
+    for item in catalogue['peliculas']:
+        if int(movie_id) == item['id']:
+            if 'carrito' not in session:
+                session['carrito'] = []
+            session['carrito'].append(movie_id)
+
+            if 'precio' not in session:
+                    session['precio'] = 0
+            session['precio'] += item['precio']
+            if 'num_productos_car' not in session:
+                session['num_productos_car'] = []
+                for num_movies in range(len(catalogue['peliculas'])):
+                    session['num_productos_car'].append(0)
+            session['num_productos_car'][int(movie_id)-1] += 1
+            session.modified = True
+            break
+
+    return redirect(url_for('filmdescription', movie_id = movie_id))
 
 @app.route('/category', methods=['GET', 'POST'])
 def category():
@@ -238,3 +264,49 @@ def search():
         msg = "No hay peliculas asociadas a la busqueda '" + search + "'"
         
     return render_template('search.html', title = "Búsqueda", movies=movies, categories= getCategories(), msg = msg)
+
+@app.route('/carrito', methods=['GET', 'POST'])
+def carrito():
+    catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
+    catalogue = json.loads(catalogue_data)
+    movies=catalogue['peliculas']
+    lista = []
+
+    for movie in movies:
+        if str(movie['id']) in session['carrito']:
+            lista.append(movie)
+
+    return render_template('carrito.html', title = "Carrito", lista_carrito = lista, num_elementos = session['num_productos_car'], precio="{0:.2f}".format(session['precio']), categories=getCategories())
+
+@app.route('/carrito/<movie_id>_removed', methods=['GET', 'POST'])
+def eliminar(movie_id):
+    catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
+    catalogue = json.loads(catalogue_data)
+    movies=catalogue['peliculas']
+
+    for movie in catalogue['peliculas']:
+        if movie['id'] == int(movie_id):
+            print('hola')
+            session['carrito'].remove(movie_id)
+            session['precio'] -= movie['precio']
+            session['num_productos_car'][int(movie_id) - 1] -= 1
+            break
+
+    session.modified = True
+    return redirect(url_for('carrito'))
+
+@app.route('/carrito/<movie_id>_added', methods=['GET', 'POST'])
+def añadir(movie_id):
+    catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
+    catalogue = json.loads(catalogue_data)
+    movies=catalogue['peliculas']
+
+    for movie in catalogue['peliculas']:
+        if movie['id'] == int(movie_id):
+            session['carrito'].append(movie_id)
+            session['precio'] += movie['precio']
+            session['num_productos_car'][int(movie_id) - 1] += 1
+            break
+
+    session.modified = True
+    return redirect(url_for('carrito'))
