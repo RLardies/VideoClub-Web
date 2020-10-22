@@ -208,3 +208,33 @@ def historial():
     
     else:
         return redirect(url_for('home'))
+
+@app.route('/search', methods=['GET', 'POST'])
+def search():
+
+    search =  request.args.get('search')
+
+    catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
+    catalogue = json.loads(catalogue_data)
+
+    movies = []
+    msg = None
+
+    if 'search' in request.form:
+
+        search = request.form['search']
+        search = search.lower()
+
+        for movie in catalogue['peliculas']:
+            titulo = movie['titulo'].lower()
+            if titulo.find(search) >= 0:
+                movies.append(movie)
+    else:
+        for movie in catalogue['peliculas']:
+            movies.append(movie)
+
+    if len(movies) == 0:
+
+        msg = "No hay peliculas asociadas a la busqueda '" + search + "'"
+        
+    return render_template('search.html', title = "Búsqueda", movies=movies, categories= getCategories(), msg = msg)

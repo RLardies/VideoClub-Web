@@ -36,8 +36,9 @@
     <cattext>
       <h1>Categories</h1>
     </cattext>
-    <form  >
+    <form  action="{{url_for('search') }}" method="post">
      <input type="textsearch" name="search" placeholder="Search..">
+     <input  id="search" type="submit" value="Search">
     </form>
 
    
