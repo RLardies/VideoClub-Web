@@ -37,8 +37,8 @@
             <tr>
             {% endfor %}
             <tr>
-               <td class = "fila_vacia"> <button class=boton>Finalizar Compra</button></td>
-               <td class = "fila_vacia" colspan="4"> Precio final de la compra: {{precio}} </td>
+               <td> <button class=button onclick="window.location.href='{{url_for('realizar_pedido')}}'">Finalizar pedido</button></td>
+               <td colspan="4"> Precio final de la compra: {{precio}} </td>
             </tr>
          </table>
       {% endif %}

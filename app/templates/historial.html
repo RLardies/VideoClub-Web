@@ -3,8 +3,6 @@
 
 {% block content %}
 
-<body>
-
 <header> 
   <nav>
     <a href="{{ url_for('signup') }}" >Sign up</a>
@@ -16,43 +14,30 @@
   <bodytext><h2>{{ title }}</h2></bodytext>
 
   <bodycontent>
-
     {% if msg == None %}
-      <div class="row">
-        <div class="column1"> </div>
-        <div class="column2"> </div>
-        <div class="column3"> </div>
-        <div class="column4"> </div>
+      <table>
+        {% for pedido in historial.keys() %}
+          <tr> 
+            <td class=dateorder colspan="3"> Pedido de {{pedido}} </td>
+          </tr>
 
-      </div>
-      <script>
-      
-        var len = Object.keys({{ movies|tojson }}).length;
-        var elemscolumn = 4;
-        var colnum = 1;
-        var i = 1;
+          <tr>
+            <th>Portada</th>
+            <th>Titulo</th>
+            <th>Cantidad </th>
+            <th>Precio/unidad</th>
+          </tr>
 
-    
-      </script>
-
-      {% for item in movies %}
-
-        <a id='{{ item.id }}' href="{{url_for('filmdescription', id=item.id) }}"></a>
-
-          <script>
-
-            if (i % (elemscolumn) != 0) {
-              show({{ item.titulo|tojson }}, {{ item.poster|tojson }}, colnum, {{item.id }});
-              i += 1;
-              colnum +=1;
-            }
-            else{
-              show({{ item.titulo|tojson }}, {{ item.poster|tojson }}, colnum, {{ item.id }});
-              i = 1;
-              colnum = 1;
-            }
-          </script>
-      {% endfor %}  
+          {% for item in historial[pedido] %}
+            <tr>
+              <td><img id="Img_carrito" src="{{item.poster}}" alt ="item.poster"></td>
+              <td>{{item.titulo}}</td>
+              <td>{{item.cantidad}}</td>
+              <td>{{item.precio}}</td>
+            </tr>
+          {% endfor %}
+        {% endfor %}
+      </table>
     {% else %}
 
       <cattext>
@@ -62,10 +47,5 @@
   </bodycontent>
   
 </content>
-
-
-
-</body>
-</html>
 
 {% endblock %}

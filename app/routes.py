@@ -10,6 +10,7 @@ import sys
 import hashlib
 from random import randint
 import itertools
+import time
 
 
 def getMovies():
@@ -159,6 +160,12 @@ def signup():
             file.write(request.form['creditcard'] + os.linesep)
             file.write(str(randint(0,100)) + os.linesep)
 
+            hist_route = "app/users/" + username + "/historial.json"
+            file = open(hist_route, "w")
+            historial = {}
+
+            file.write(json.dumps(historial))
+
             return render_template('home.html', movies = getMovies(), categories=getCategories())
         
     else:
@@ -233,15 +240,14 @@ def historial():
 
     if session['usuario'] != None:
 
-        route = "users/" + session['usuario'] + "/historial.json"
-        file = "app/"+ route
+        route = "app/users/" + session['usuario'] + "/historial.json"
 
-        if os.path.isfile(file):
+        if os.path.isfile(route):
 
-            historial_data = open(os.path.join(app.root_path, route), encoding="utf-8").read()
+            historial_data = open(route, encoding="utf-8").read()
             historial = json.loads(historial_data)
 
-            return render_template('historial.html', title='Historial de Compra', movies=historial, categories=getCategories())
+            return render_template('historial.html', title='Historial de Compra', historial=historial, msg= None, categories=getCategories())
 
         else:
             return render_template('historial.html', title='Historial de Compra',msg="No se ha realizado ninguna compra", categories=getCategories())
@@ -308,14 +314,11 @@ def eliminar(movie_id):
     catalogue = json.loads(catalogue_data)
     movies=catalogue['peliculas']
 
-    for movie in catalogue['peliculas']:
-        if movie['id'] == int(movie_id):
-            print('hola')
-            session['carrito'].remove(movie_id)
-            session['precio'] -= movie['precio']
-            session['num_productos_car'][int(movie_id) - 1] -= 1
-            session['num_items'] -= 1
-            break
+    if movies[int(movie_id)] != None:
+        session['carrito'].remove(movie_id)
+        session['precio'] -= movies[int(movie_id)]['precio']
+        session['num_productos_car'][int(movie_id) - 1] -= 1
+        session['num_items'] -= 1
 
     session.modified = True
     return redirect(url_for('carrito'))
@@ -326,12 +329,63 @@ def añadir(movie_id):
     catalogue = json.loads(catalogue_data)
     movies=catalogue['peliculas']
 
-    for movie in catalogue['peliculas']:
-        if movie['id'] == int(movie_id):
-            session['carrito'].append(movie_id)
-            session['precio'] += movie['precio']
-            session['num_productos_car'][int(movie_id) - 1] += 1
-            session['num_items'] += 1
-            break
+    if movies[int(movie_id)] != None:
+        session['carrito'].append(movie_id)
+        session['precio'] += movies[int(movie_id)]['precio']
+        session['num_productos_car'][int(movie_id) - 1] += 1
+        session['num_items'] += 1
 
     return redirect(url_for('carrito'))
+
+@app.route('/finpedido', methods=['GET', 'POST'])
+def realizar_pedido():
+
+    catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
+    catalogue = json.loads(catalogue_data)
+    movies=catalogue['peliculas']
+
+    if 'usuario' in session:
+        route = "app/users/" + session['usuario'] + "/historial.json"
+        historial_data = open(route, encoding="utf-8").read()
+        historial = json.loads(historial_data) 
+
+        date = time.strftime("%d/%m/%y")
+        if str(date) not in historial:
+            historial[str(date)]= []
+
+        
+        for movie in session['carrito']:
+            in_history = 0
+            i = movies[int(movie)-1]
+            if historial[str(date)] == []:
+                item = movies[int(movie)-1]
+                item['cantidad'] = session['num_productos_car'][int(movie)-1]
+                historial[str(date)].append(item)
+
+            for j in historial[str(date)]:
+                print(j['id'])
+                print(i['id'])
+                if j['id'] == i['id']:
+                    in_history = 1
+
+            if in_history == 0:
+                item = movies[int(movie)-1]
+                item['cantidad'] = session['num_productos_car'][int(movie)-1]
+                historial[str(date)].append(item)
+
+        file = open(route, "w")
+        file.write(json.dumps(historial, indent=2))
+
+        session['carrito'] = []
+        session['num_productos_car'] = []
+        for num_movies in range(len(catalogue['peliculas'])):
+            session['num_productos_car'].append(0)
+        session['precio'] = 0
+        session['num_items'] = 0
+
+        return redirect(url_for('carrito'))
+
+    else:
+
+        return redirect(url_for('login'))
+

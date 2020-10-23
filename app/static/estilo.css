@@ -433,7 +433,7 @@ descr {
 }
 
 .cart-icon{
-  position: fixed;
+    position: absolute;
     top: 30px;
     right: 50px;
     z-index: 2;
@@ -465,5 +465,17 @@ descr {
     -webkit-transition: -webkit-transform 0.2s 0s;
     -moz-transition: -moz-transform 0.2s 0s;
     transition: transform 0.2s 0s;
-    }
+}
+
+table {
+  color:#8e8be0;
+}
+
+td {
+  text-align: center;
+}
+
+.dateorder {
+  color:#8e8be0;
+  text-align: left;
 }
