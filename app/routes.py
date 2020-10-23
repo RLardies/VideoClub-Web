@@ -48,15 +48,22 @@ def home():
     catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
     catalogue = json.loads(catalogue_data)
     categories = []
-    session['carrito'] = []
-    session['precio'] = 0
-    session['num_productos_car'] = []
-    for num_movies in range(len(catalogue['peliculas'])):
-        session['num_productos_car'].append(0)
 
-    for movie in catalogue['peliculas']:
-        if movie['categoria'] not in categories:
-            categories.append(movie['categoria'])
+    if 'num_items' not in session:
+        session['num_items'] = 0
+        
+    if 'carrito' not in session:
+        session['carrito'] = []
+
+    if 'precio' not in session:
+        session['precio'] = 0
+
+    if 'num_productos_car' not in session:
+        session['num_productos_car'] = []
+    
+    for num_movies in range(len(catalogue['peliculas'])):
+       session['num_productos_car'].append(0)
+
     
     return render_template('home.html', title = "Home", movies=catalogue['peliculas'], categories=getCategories())
 
@@ -113,6 +120,12 @@ def logout():
     session['usuario'] = None
     session.modified=False
     session.pop('usuario', None)
+    session.pop('carrito', None)
+    session.pop('precio', None)
+    session.pop('num_productos_car', 0)
+    session.pop('num_items',0)
+
+
     return redirect(url_for('home'))
 
 @app.route('/signup', methods=['GET', 'POST'])
@@ -145,10 +158,6 @@ def signup():
             file.write(request.form['email'] + os.linesep)
             file.write(request.form['creditcard'] + os.linesep)
             file.write(str(randint(0,100)) + os.linesep)
-
-
-            session['usuario'] = request.form['username']
-            session.modified=True
 
             return render_template('home.html', movies = getMovies(), categories=getCategories())
         
@@ -191,7 +200,12 @@ def comprar(movie_id):
                 for num_movies in range(len(catalogue['peliculas'])):
                     session['num_productos_car'].append(0)
             session['num_productos_car'][int(movie_id)-1] += 1
-            session.modified = True
+
+
+            if 'num_items' not in session:
+                session['num_items'] = 0
+            session['num_items'] += 1
+
             break
 
     return redirect(url_for('filmdescription', movie_id = movie_id))
@@ -272,6 +286,16 @@ def carrito():
     movies=catalogue['peliculas']
     lista = []
 
+    if 'carrito' not in session:
+        session['carrito'] = []
+
+    if 'precio' not in session:
+        session['precio'] = 0
+
+    if 'num_productos_car' not in session:
+        session['num_productos_car'] = []
+
+
     for movie in movies:
         if str(movie['id']) in session['carrito']:
             lista.append(movie)
@@ -290,6 +314,7 @@ def eliminar(movie_id):
             session['carrito'].remove(movie_id)
             session['precio'] -= movie['precio']
             session['num_productos_car'][int(movie_id) - 1] -= 1
+            session['num_items'] -= 1
             break
 
     session.modified = True
@@ -306,7 +331,7 @@ def añadir(movie_id):
             session['carrito'].append(movie_id)
             session['precio'] += movie['precio']
             session['num_productos_car'][int(movie_id) - 1] += 1
+            session['num_items'] += 1
             break
 
-    session.modified = True
     return redirect(url_for('carrito'))
