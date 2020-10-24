@@ -17,8 +17,8 @@
     {% if msg == None %}
       <table>
         {% for pedido in historial.keys() %}
-          <tr> 
-            <td class=dateorder colspan="3"> Pedido de {{pedido}} </td>
+          <tr class="despliegue"> 
+            <td class=dateorder colspan="4"> Pedido de {{pedido}} </td>
           </tr>
 
           <tr>
@@ -36,7 +36,9 @@
               <td>{{item.precio}}</td>
             </tr>
           {% endfor %}
+          <tr class="findespliegue"></tr>
         {% endfor %}
+
       </table>
     {% else %}
 
@@ -47,5 +49,14 @@
   </bodycontent>
   
 </content>
+
+<script>
+  $(document).ready(function(){
+    $('.despliegue').on('click',function(){
+        $(this).nextUntil('.findespliegue').slideToggle();
+      }
+    );
+  });
+</script>
 
 {% endblock %}

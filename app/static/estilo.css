@@ -478,4 +478,14 @@ td {
 .dateorder {
   color:#8e8be0;
   text-align: left;
+  width: 100%;
+}
+
+.despliegue td{
+    font-weight: bold;
+    font-size: 15px;
+    align-items: center;
+    background: #8e8be0;
+    color: #302e7a;
+    cursor: pointer;
 }
