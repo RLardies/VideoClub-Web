@@ -1,24 +1,24 @@
 {% extends "base.html" %}
 
-
 {% block content %}
-
-<body>
 
 <header> 
   <nav>
-   	{% if not session['usuario'] %}
+    <span id="connected_users"></span>
+
+    {% if not session['usuario'] %}
       <a href="{{url_for('signup') }}">Sign up</a>
     {% endif %}
+ 
   </nav>
   <p>VideoClub</p>
 </header>
 
+<body>
+
 <content>
 
   <bodytext><h2>{{ movie.titulo }}</h2></bodytext>
- 
-
 
   <descr>
     <img id="myImg" src="{{ movie.poster }}" alt="{{ movie.titulo }}">
@@ -44,8 +44,6 @@
 
   
 </content>
-
-
 
 </body>
 </html>

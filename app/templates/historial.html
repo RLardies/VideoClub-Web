@@ -5,7 +5,12 @@
 
 <header> 
   <nav>
-    <a href="{{ url_for('signup') }}" >Sign up</a>
+    <span id="connected_users"></span>
+
+    {% if not session['usuario'] %}
+      <a href="{{url_for('signup') }}">Sign up</a>
+    {% endif %}
+ 
   </nav>
   <p>VideoClub</p>
 </header>
@@ -14,8 +19,15 @@
   <bodytext><h2>{{ title }}</h2></bodytext>
 
   <bodycontent>
-    {% if msg == None %}
+    
       <table>
+          <td>Saldo Total: {{ saldo }}</th>
+            <td></td>
+            <td></td>
+            <td>
+            <button class="button" onclick="location.href='{{url_for('aumentarSaldo')}}'">&#43; 10</button> </td>
+          </tr>
+        {% if msg == None %}
         {% for pedido in historial.keys() %}
           <tr> 
             <td class=dateorder colspan="3"> Pedido de {{pedido}} </td>
@@ -37,9 +49,12 @@
             </tr>
           {% endfor %}
         {% endfor %}
-      </table>
-    {% else %}
 
+      </table>
+
+      {% else %}
+      </table>
+      
       <cattext>
         <h3>{{ msg }}</h3>
       </cattext>

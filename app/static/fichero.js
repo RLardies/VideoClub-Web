@@ -47,10 +47,7 @@ function validacion(){
 	return true;
 }
 
-/*function ventanaNueva(){ 
-	window.open('home','nuevaVentana','width=300, height=400')
-}
-*/
+
 
 $(document).ready(function() {
 

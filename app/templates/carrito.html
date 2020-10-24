@@ -4,16 +4,18 @@
 
 <header> 
   <nav>
-   	{% if not session['usuario'] %}
+    <span id="connected_users"></span>
+
+    {% if not session['usuario'] %}
       <a href="{{url_for('signup') }}">Sign up</a>
     {% endif %}
+ 
   </nav>
   <p>VideoClub</p>
 </header>
-
 <content>
 
-	<h2>Tu cesta</h2>
+	<bodytext><h2>Tu Cesta</h2></bodytext>
       {% if not lista_carrito %}
          <h2> No tienes peliculas en tu carrito </h2>
       {% else %}
@@ -41,6 +43,10 @@
                <td colspan="4"> Precio final de la compra: {{precio}} </td>
             </tr>
          </table>
+      {% endif %}
+
+      {% if msg != None %}
+        <p> {{ msg }} </p>
       {% endif %}
 
 </content>
