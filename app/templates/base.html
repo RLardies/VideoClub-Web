@@ -5,12 +5,12 @@
     <title>{% block title %} {% endblock %}- VideoClub</title>
     <!-- Uso de url_for para obtener la ruta de elementos de la página -->
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='estilo.css') }}">
-    <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script type="text/javascript" defer src="{{ url_for('static', filename='fichero.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='showcatalogue.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='imageclick.js') }}"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script type="text/javascript" defer src="{{ url_for('static', filename='banner.js') }}"></script>
+    <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script defer src="{{ url_for('static', filename='fichero.js') }}"></script>
+    <script src="{{ url_for('static', filename='showcatalogue.js') }}"></script>
+    <script src="{{ url_for('static', filename='imageclick.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='banner.js') }}"></script>
+    
     
     <a class="cart-icon" href="{{url_for('carrito')}}">
         <span id="totalItems"> {{ session['num_items'] }}</span>
@@ -34,11 +34,9 @@
 </body>
 
 <aside>
-    <cattext>
-      <h1>Categories</h1>
-    </cattext>
+    <h2 class="subtitulos">Categories</h2></bodytext>
     <form  action="{{url_for('search') }}" method="post">
-     <input type="textsearch" name="search" placeholder="Search..">
+     <input type="search" name="search" placeholder="Search..">
      <input  id="search" type="submit" value="Search">
     </form>
 

@@ -16,7 +16,6 @@ function show(titulo, poster, colnum, id) {
 
   var title = document.createElement("div");
   title.setAttribute("class", "overlay");
-  title.setAttribute("id", "titulo");
   title.className = "overlay";
   title.innerHTML = titulo;
   container.appendChild(title);
@@ -24,7 +23,6 @@ function show(titulo, poster, colnum, id) {
   var imagen = document.createElement("img");
   imagen.setAttribute("src", poster);
   imagen.setAttribute("alt", titulo);
-  imagen.setAttribute("style", ".column" + colnum.toString() + "img")
  
 
   container.appendChild(imagen);

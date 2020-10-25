@@ -20,41 +20,41 @@
 
 <body>
 
-<content>
-  <divform>
-    <form onsubmit="validacion()" action="{{url_for('signup') }}" method="post" >
-      <label for="fname" >First Name</label>
-      <input type="text" id="fname" name="firstname" placeholder="Your name..">
+<div class="content">
+  
+  <form class="divform" onsubmit="return validacion()" action="{{url_for('signup') }}" method="post" >
+    <label for="fname" >First Name</label>
+    <input type="text" id="fname" name="firstname" placeholder="Your name..">
 
-      <label for="lname" >Last Name</label>
-      <input type="text" id="lname" name="lastname" placeholder="Your last name..">
-      
-      <label for="username" >User Name</label>
-      <input type="text" id="username" name="username" placeholder="Your user name..">
-      
-      <label for="email" >Email</label>
-      <input type="text" id="email" name="email" placeholder="Your email..">
-      
-      <label for="pwd" >Password</label>
-      <input type="password" id="pwd" name="pwd" 
-        placeholder="Insert your password..">
-      <span id="password-strength-text" >Too short</span><br><br>
+    <label for="lname" >Last Name</label>
+    <input type="text" id="lname" name="lastname" placeholder="Your last name..">
+    
+    <label for="username" >User Name</label>
+    <input type="text" id="username" name="username" placeholder="Your user name..">
+    
+    <label for="email" >Email</label>
+    <input type="text" id="email" name="email" placeholder="Your email..">
+    
+    <label for="pwd" >Password</label>
+    <input type="password" id="pwd" name="pwd" 
+      placeholder="Insert your password..">
+    <span id="password-strength-text" >Too short</span><br><br>
 
-      <label for="creditcard" >Credit Card</label>
-      <input type="text" id="creditcard" name="creditcard" 
-        placeholder="Insert your credit card..">
+    <label for="creditcard" >Credit Card</label>
+    <input type="text" id="creditcard" name="creditcard" 
+      placeholder="Insert your credit card..">
 
-      <label for="gender" >Gender</label>
-      <select id="gender" name="gender">
-        <option value="notsay">Rather not say</option>
-        <option value="male">Male</option>
-        <option value="female">Female</option>
-      </select>
+    <label for="gender" >Gender</label>
+    <select id="gender" name="gender">
+      <option value="notsay">Rather not say</option>
+      <option value="male">Male</option>
+      <option value="female">Female</option>
+    </select>
 
-      <input type="submit" value="Submit">
-    </form>
-  </divform>
-</content>
+    <input type="submit" value="Submit">
+  </form>
+  
+</div>
 
 
 </body>

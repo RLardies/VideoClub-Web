@@ -342,7 +342,7 @@ def carrito():
         if str(movie['id']) in session['carrito']:
             lista.append(movie)
 
-    return render_template('carrito.html', title = "Carrito", lista_carrito = lista, num_elementos = session['num_productos_car'], precio="{0:.2f}".format(session['precio']), categories=getCategories())
+    return render_template('carrito.html', title = "Carrito", lista_carrito = lista, num_elementos = session['num_productos_car'], precio="{0:.2f}".format(session['precio']), categories=getCategories(),  msg = "")
 
 @app.route('/carrito/<movie_id>_removed', methods=['GET', 'POST'])
 def eliminar(movie_id):

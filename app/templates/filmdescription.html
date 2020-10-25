@@ -16,34 +16,34 @@
 
 <body>
 
-<content>
+<div class="content">
 
-  <bodytext><h2>{{ movie.titulo }}</h2></bodytext>
-
-  <descr>
-    <img id="myImg" src="{{ movie.poster }}" alt="{{ movie.titulo }}">
-
-    <button class="button" onclick="location.href='{{url_for('comprar', movie_id = movie.id)}}'">Agregar a cesta</button>
-
-    <p > Precio: {{ movie.precio }}</p>
-    <p > Año: {{ movie.año }}</p>
-    <p > Director: {{ movie.director }}</p>
-    <p > Categoría: {{ movie.categoria }}</p>
-
-    <div id="myModal" class="modal">
-      <span class="close">&times;</span>
-      <img class="modal-content" id="img01">
-      <div id="caption"></div>
-      
-
-
-      <script >
-        imageClick();
-      </script>
-    </div>
+  <h2 class="subtitulos">{{ movie.titulo }}</h2>
 
   
-</content>
+  <img id="myImg" src="{{ movie.poster }}" alt="{{ movie.titulo }}">
+
+  <button class="button" onclick="location.href='{{url_for('comprar', movie_id = movie.id)}}'">Agregar a cesta</button>
+
+  <p class="descr"> Precio: {{ movie.precio }}</p>
+  <p class="descr"> Año: {{ movie.año }}</p>
+  <p class="descr"> Director: {{ movie.director }}</p>
+  <p class="descr"> Categoría: {{ movie.categoria }}</p>
+
+  <div id="myModal" class="modal">
+    <span class="close">&times;</span>
+    <img src="{{ movie.poster }}" class="modal-content" id="img01" alt="img">
+    <div id="caption"></div>
+    
+
+
+    <script >
+      imageClick();
+    </script>
+  </div>
+
+  
+</div>
 
 </body>
 </html>
