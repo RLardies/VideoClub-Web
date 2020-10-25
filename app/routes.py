@@ -239,6 +239,11 @@ def category():
 def historial():
 
     if session['usuario'] != None:
+        route = "app/users/" + session['usuario'] + "/data.dat"
+        with open(route) as data:
+                texto = itertools.islice(data, 4, 5 )
+                for linea in texto:
+                    saldo = linea[:-1]
 
         route = "app/users/" + session['usuario'] + "/historial.json"
 
@@ -247,13 +252,44 @@ def historial():
             historial_data = open(route, encoding="utf-8").read()
             historial = json.loads(historial_data)
 
-            return render_template('historial.html', title='Historial de Compra', historial=historial, msg= None, categories=getCategories())
+            return render_template('historial.html', title='Historial de Compra', historial=historial, msg= None, categories=getCategories(), saldo=saldo)
 
         else:
-            return render_template('historial.html', title='Historial de Compra',msg="No se ha realizado ninguna compra", categories=getCategories())
+            return render_template('historial.html', title='Historial de Compra',msg="No se ha realizado ninguna compra", categories=getCategories(), saldo=saldo)
     
     else:
         return redirect(url_for('home'))
+
+@app.route('/historial/aumentar_saldo', methods=['GET', 'POST'])
+def aumentarSaldo():
+
+    username = session['usuario']
+
+    if os.path.isdir("app/users/" + username):
+
+        route = "app/users/" + username + "/data.dat"
+
+        with open(route) as data:
+            texto = itertools.islice(data, 4, 5 )
+            for linea in texto:
+                saldo = linea[:-1]
+
+        nuevo_saldo = float(saldo) + 10
+        data = []
+        with open(route, 'r') as f:
+            for linea in f:
+                data.append(linea[:-1])
+
+        with open(route, "w") as file:
+
+            file.write(data[0]+ os.linesep)
+            file.write(data[1] + os.linesep)
+            file.write(data[2] + os.linesep)
+            file.write(data[3] + os.linesep)
+            file.write(str(round(nuevo_saldo, 2)) + os.linesep) 
+
+    return redirect(url_for('historial'))
+
 
 @app.route('/search', methods=['GET', 'POST'])
 def search():
@@ -345,33 +381,93 @@ def realizar_pedido():
     movies=catalogue['peliculas']
 
     if 'usuario' in session:
+
+        username = session['usuario']
+
+        if os.path.isdir("app/users/" + username):
+
+            route = "app/users/" + username + "/data.dat"
+
+            with open(route) as data:
+                texto = itertools.islice(data, 4, 5 )
+                for linea in texto:
+                    saldo = linea[:-1]
+
+        
+
+        if float(saldo) < float(session['precio']):
+            flash(u'Saldo insuficiente', 'error')
+
+            lista = []
+
+            if 'carrito' not in session:
+                session['carrito'] = []
+
+            if 'precio' not in session:
+                session['precio'] = 0
+
+            if 'num_productos_car' not in session:
+                session['num_productos_car'] = []
+
+
+            for movie in movies:
+                if str(movie['id']) in session['carrito']:
+                    lista.append(movie)
+
+            msg = "Saldo insuficiente"
+
+            return render_template('carrito.html', title = "Carrito", lista_carrito = lista, num_elementos = session['num_productos_car'], precio="{0:.2f}".format(session['precio']), categories=getCategories(), msg = msg)
+
+        nuevo_saldo = float(saldo) - float(session['precio'])
+        data = []
+        with open(route, 'r') as f:
+            for linea in f:
+                data.append(linea[:-1])
+
+        with open(route, "w") as file:
+
+            file.write(data[0]+ os.linesep)
+            file.write(data[1] + os.linesep)
+            file.write(data[2] + os.linesep)
+            file.write(data[3] + os.linesep)
+            file.write(str(round(nuevo_saldo, 2)) + os.linesep)
+
+
         route = "app/users/" + session['usuario'] + "/historial.json"
-        historial_data = open(route, encoding="utf-8").read()
-        historial = json.loads(historial_data) 
+
+        if os.path.isfile(route):
+
+            historial_data = open(route, encoding="utf-8").read()
+            historial = json.loads(historial_data) 
+        else:
+            historial = {}
 
         date = time.strftime("%d/%m/%y")
         if str(date) not in historial:
             historial[str(date)]= []
 
-        
+
         for movie in session['carrito']:
             in_history = 0
-            i = movies[int(movie)-1]
-            if historial[str(date)] == []:
-                item = movies[int(movie)-1]
-                item['cantidad'] = session['num_productos_car'][int(movie)-1]
-                historial[str(date)].append(item)
+            item = movies[int(movie)-1]
 
-            for j in historial[str(date)]:
-                print(j['id'])
-                print(i['id'])
-                if j['id'] == i['id']:
-                    in_history = 1
+            if historial[str(date)] != []:
+                for j in historial[str(date)]:
+                    print(j['id'])
+                    print(item['id'])
+                    if j['id'] == item['id']:
+                        in_history = 1
+                        break
 
             if in_history == 0:
-                item = movies[int(movie)-1]
                 item['cantidad'] = session['num_productos_car'][int(movie)-1]
+                session['num_productos_car'][int(movie)-1] = 0
                 historial[str(date)].append(item)
+
+            if in_history == 1:
+                index = historial[str(date)].index(j)
+                historial[str(date)][index]['cantidad'] += session['num_productos_car'][int(movie)-1]
+                session['num_productos_car'][int(movie)-1] = 0
 
         file = open(route, "w")
         file.write(json.dumps(historial, indent=2))
@@ -389,3 +485,9 @@ def realizar_pedido():
 
         return redirect(url_for('login'))
 
+
+@app.route('/connected_users')
+def connected_user():
+    num_users = randint(100, 1000)
+
+    return "Usuarios Conectados: " + str(num_users)

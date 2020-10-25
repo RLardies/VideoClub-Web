@@ -278,6 +278,28 @@ descr {
   transform: translateY(4px);
 }
 
+.buttonSaldo {
+  padding: 5px 5px;
+  margin-bottom: 10px;
+  font-size: 15px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #fff;
+  background-color: #8e8be0;
+  border: none;
+  border-radius: 7px;
+  box-shadow: 0 9px #000000;
+}
+
+.buttonSaldo:hover {background-color: #5652bf}
+
+.buttonSaldo:active {
+  background-color: #5652bf;
+  box-shadow: 0 5px #000000;
+  transform: translateY(4px);
+}
+
 #myImg {
 
   width: 35%; 
@@ -488,4 +510,8 @@ td {
     background: #8e8be0;
     color: #302e7a;
     cursor: pointer;
+}
+
+.color {
+  color:#8e8be0;
 }
