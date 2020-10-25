@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from app import app
-from flask import render_template, request, url_for, redirect, session, flash
+from flask import render_template, request, url_for, redirect, session, flash, make_response
 import jinja2
 import json
 import os
@@ -93,11 +93,15 @@ def login():
 
 
             if password == pwd:
+
+                response = make_response(redirect(url_for('home')))
+                response.set_cookie('usuario', request.form['username'])
                 session['usuario'] = request.form['username']
                 session.modified=True
 
+
                 # se puede usar request.referrer para volver a la pagina desde la que se hizo login
-                return redirect(url_for('home'))
+                return response
 
             else:
                 #Algo de contraseña invalida
@@ -109,12 +113,13 @@ def login():
             #USUARIO NO EXISTE
             return render_template('login.html', title = "Sign In", categories=getCategories())
     else:
+        nombre = request.cookies.get('usuario')
         # se puede guardar la pagina desde la que se invoca 
         session['url_origen']=request.referrer
         session.modified=True        
         # print a error.log de Apache si se ejecuta bajo mod_wsgi
         print (request.referrer, file=sys.stderr)
-        return render_template('login.html', title = "Sign In", categories=getCategories())
+        return render_template('login.html', title = "Sign In", nombre = nombre, categories=getCategories())
 
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
@@ -460,14 +465,13 @@ def realizar_pedido():
                         break
 
             if in_history == 0:
-                item['cantidad'] = session['num_productos_car'][int(movie)-1]
-                session['num_productos_car'][int(movie)-1] = 0
+                item['cantidad'] = 1
                 historial[str(date)].append(item)
 
             if in_history == 1:
                 index = historial[str(date)].index(j)
-                historial[str(date)][index]['cantidad'] += session['num_productos_car'][int(movie)-1]
-                session['num_productos_car'][int(movie)-1] = 0
+                historial[str(date)][index]['cantidad'] += 1
+            
 
         file = open(route, "w")
         file.write(json.dumps(historial, indent=2))

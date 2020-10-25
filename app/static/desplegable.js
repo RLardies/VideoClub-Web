@@ -4,4 +4,6 @@ $(document).ready(function(){
     	$(this).nextUntil('.findespliegue').slideToggle();
   	}
 	);
+
+	$('.despliegue').nextUntil('.findespliegue').hide();
 });

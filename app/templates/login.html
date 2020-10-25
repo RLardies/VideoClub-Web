@@ -24,7 +24,11 @@
 	<h1>Sign In</h1>
 	    <form method="post" novalidate>
 	        <label><b>Username</b></label>
-	        <input name="username" type="text" placeholder="Enter username">
+	        {% if nombre %}
+	        	<input name="username" type="text" value ={{nombre}} placeholder="Enter username">
+	        {% else %}
+	        	<input name="username" type="text"  placeholder="Enter username">
+	        {% endif %}
 	        <label><b>Password</b></label>
 	        <input name="password" type="password" placeholder="Enter password">
 	        <input type="submit" value="Login">

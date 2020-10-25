@@ -20,21 +20,17 @@
   <script defer src="{{ url_for('static', filename='desplegable.js') }}"></script>
   
   <h2 class="subtitulos">{{ title }}</h2> 
-
-
-    
+    <div>
+      <b class="info">Saldo Total: {{ saldo }}</b>
+      <button class="buttonSaldo" onclick="location.href='{{url_for('aumentarSaldo')}}'">&#43; 10</button>
+    </div>
     <table>
-      <tr>
-        <th colspan="3">Saldo Total: {{ saldo }}</th>
-        <th> <button class="buttonSaldo" onclick="location.href='{{url_for('aumentarSaldo')}}'">&#43; 10</button> </th>
-      </tr>
+     
       {% if msg == None %}
       {% for pedido in historial.keys() %}
         <tr class="despliegue"> 
           <td class=dateorder colspan="4"> Pedido de {{pedido}} </td>
         </tr>
-
-        <tr>
           <th>Portada</th>
           <th>Titulo</th>
           <th>Cantidad </th>
@@ -60,13 +56,11 @@
     </table>
     
     <cattext>
-      <h3>{{ msg }}</h3>
+      <b class="info">{{ msg }}</b>
     </cattext>
   {% endif %}
 
   
 </div>
-
-
 
 {% endblock %}

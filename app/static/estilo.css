@@ -483,6 +483,8 @@ bodycontent {
 
 table {
   color:#8e8be0;
+  width:100%;
+  align-items:center;
 }
 
 td {
@@ -502,8 +504,16 @@ td {
     background: #8e8be0;
     color: #302e7a;
     cursor: pointer;
+    height: 0;
+    overflow: hidden;
 }
 
 .color {
   color:#8e8be0;
+}
+
+b {
+  color:#8e8be0;
+  font-size: 15px;
+
 }

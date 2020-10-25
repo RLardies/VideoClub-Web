@@ -17,16 +17,13 @@
 
 	<h2 class="subtitulos">Tu Cesta</h2>
     {% if not lista_carrito %}
-       <h2> No tienes peliculas en tu carrito </h2>
+       <h2 class="subtitulos"> No tienes peliculas en tu carrito </h2>
     {% else %}
        <table>
           <tr>
-             <th> </th>
-             <th> Película </th>
-             <th> Precio </th>
-             <th> Cantidad </th>
-             <th> </th>
-             <th> </th>
+            <th> Película </th>
+            <th> Precio </th>
+            <th> Cantidad </th>
           </tr>
           {% for item in lista_carrito %}
           <tr>
@@ -46,7 +43,7 @@
     {% endif %}
 
     {% if msg != None %}
-      <h3 class="color"> {{ msg }} </h3>
+      <b> {{ msg }} </b>
     {% endif %}
 
 </div>
