@@ -2,6 +2,7 @@
 
 {% block content %}
 
+<body>
 <header> 
   <nav>
     <span id="connected_users"></span>
@@ -11,8 +12,9 @@
   	{% endif %}
  
   </nav>
-  <p>VideoClub</p>
+  <p>FILMIFY</p>
 </header>
+
 
 <div class="content">
   <h2 class="subtitulos">Catalogue</h2>
@@ -34,26 +36,28 @@
   
     </script>
 
-    {% for item in movies %}
+  {% for item in movies %}
 
-    <a id='{{ item.id }}' href="{{url_for('filmdescription', movie_id=item.id) }}"></a>
+  <a id='{{ item.id }}' href="{{url_for('filmdescription', movie_id=item.id) }}"></a>
 
-      <script>
+    <script>
 
-        if (i % (elemscolumn) != 0) {
-          show({{ item.titulo|tojson }}, {{ item.poster|tojson }}, colnum, {{item.id }});
-          i += 1;
-          colnum +=1;
-        }
-        else{
-          show({{ item.titulo|tojson }}, {{ item.poster|tojson }}, colnum, {{ item.id }});
-          i = 1;
-          colnum = 1;
-        }
-      </script>
-    {% endfor %}  
-  </div>
+      if (i % (elemscolumn) != 0) {
+        show({{ item.titulo|tojson }}, {{ item.poster|tojson }}, colnum, {{item.id }});
+        i += 1;
+        colnum +=1;
+      }
+      else{
+        show({{ item.titulo|tojson }}, {{ item.poster|tojson }}, colnum, {{ item.id }});
+        i = 1;
+        colnum = 1;
+      }
+    </script>
+  {% endfor %}  
+</div>
 
+</body>
+</html>
  
 
 
