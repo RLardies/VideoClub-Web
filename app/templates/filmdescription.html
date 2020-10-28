@@ -2,19 +2,6 @@
 
 {% block content %}
 <body>
-  
-<header> 
-  <nav>
-    <span id="connected_users"></span>
-
-    {% if not session['usuario'] %}
-      <a href="{{url_for('signup') }}">Sign up</a>
-    {% endif %}
- 
-  </nav>
-  <p>FILMIFY</p>
-</header>
-
 
 
 <div class="content">

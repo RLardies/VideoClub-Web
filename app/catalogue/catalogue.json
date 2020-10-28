@@ -3,7 +3,7 @@
     { 
 			"id": 1,
 			"titulo": "Baby driver",
-      "poster": "../static/images/baby-driver.jpg",
+      "poster": "static/images/baby-driver.jpg",
       "director": "George Lucas",
       "precio": 18.99,
       "categoria": "Accion",
@@ -19,7 +19,7 @@
     { 
       "id": 2,
       "titulo": "Moonlight",
-      "poster": "../static/images/moonlight.jpg",
+      "poster": "static/images/moonlight.jpg",
       "director": "George Lucas",
       "precio": 18.99,
       "categoria": "Aventura",
@@ -35,7 +35,7 @@
     { 
       "id": 3,
       "titulo": "Avatar",
-      "poster": "../static/images/avatar.jpg",
+      "poster": "static/images/avatar.jpg",
       "director": "George Lucas",
       "precio": 18.99,
       "categoria": "Ciencia Ficcion",
@@ -51,7 +51,7 @@
     { 
       "id": 4,
       "titulo": "Fight Club",
-      "poster": "../static/images/fight-club.jpg",
+      "poster": "static/images/fight-club.jpg",
       "director": "George Lucas",
       "precio": 18.99,
       "categoria": "Drama",
@@ -67,7 +67,7 @@
     { 
       "id": 5,
       "titulo": "Harry Potter",
-      "poster": "../static/images/harry-potter.jpg",
+      "poster": "static/images/harry-potter.jpg",
       "director": "George Lucas",
       "precio": 18.99,
       "categoria": "Ciencia Ficcion",
@@ -83,7 +83,7 @@
     { 
       "id": 6,
       "titulo": "Angeles y demonios",
-      "poster": "../static/images/angeles-y-demonios.jpg",
+      "poster": "static/images/angeles-y-demonios.jpg",
       "director": "George Lucas",
       "precio": 18.99,
       "categoria": "Aventura",
@@ -99,7 +99,7 @@
     { 
       "id": 7,
       "titulo": "Passengers",
-      "poster": "../static/images/passengers.jpg",
+      "poster": "static/images/passengers.jpg",
       "director": "George Lucas",
       "precio": 18.99,
       "categoria": "Drama",
@@ -115,7 +115,7 @@
     { 
       "id": 8,
       "titulo": "Cisne negro",
-      "poster": "../static/images/cisne-negro.jpg",
+      "poster": "static/images/cisne-negro.jpg",
       "director": "George Lucas",
       "precio": 18.99,
       "categoria": "Drama",
@@ -131,7 +131,7 @@
     { 
       "id": 9,
       "titulo": "Baby driver",
-      "poster": "../static/images/baby-driver.jpg",
+      "poster": "static/images/baby-driver.jpg",
       "director": "George Lucas",
       "precio": 18.99,
       "categoria": "Ciencia Ficcion",
@@ -147,7 +147,7 @@
      { 
       "id": 10,
       "titulo": "Malefica",
-      "poster": "../static/images/malefica.jpg",
+      "poster": "static/images/malefica.jpg",
       "director": "George Lucas",
       "precio": 18.99,
       "categoria": "Ciencia Ficcion",
@@ -163,7 +163,7 @@
      { 
       "id": 11,
       "titulo": "Avengers",
-      "poster": "../static/images/avengers.jpg",
+      "poster": "static/images/avengers.jpg",
       "director": "George Lucas",
       "precio": 18.99,
       "categoria": "Ciencia Ficcion",
