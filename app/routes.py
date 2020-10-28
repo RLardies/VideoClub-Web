@@ -12,13 +12,14 @@ from random import randint
 import itertools
 import time
 
-
+#obtenemos todas las peliculas de catalogue.json
 def getMovies():
     catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
     catalogue = json.loads(catalogue_data)
 
     return catalogue['peliculas']
 
+#obtenemos todas las categorias de catalogue.json
 def getCategories():
     catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
     catalogue = json.loads(catalogue_data)
@@ -34,15 +35,6 @@ def getCategories():
 
 
 @app.route('/')
-#@app.route('/index')
-#def index():
-#    print (url_for('static', filename='estilo.css'), file=sys.stderr)
-#    catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
-#    catalogue = json.loads(catalogue_data)
-#    return render_template('index.html', title = "Home", movies=catalogue['peliculas'])
-
-    
-
 @app.route('/home')
 def home():
     print (url_for('static', filename='estilo.css'), file=sys.stderr)
@@ -50,6 +42,7 @@ def home():
     catalogue = json.loads(catalogue_data)
     categories = []
 
+    #inicializamos algunas de las variables de session
     if 'num_items' not in session:
         session['num_items'] = 0
         
@@ -72,12 +65,12 @@ def home():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    # doc sobre request object en http://flask.pocoo.org/docs/1.0/api/#incoming-request-data
+    
     if 'username' in request.form:
-        # aqui se deberia validar con fichero .dat del usuario
 
         username = request.form['username']
 
+        #Comprobamos si existe el usuario (comprobamos si existe el directorio)
         if os.path.isdir("app/users/" + username):
 
             route = "app/users/" + username + "/data.dat"
@@ -87,11 +80,10 @@ def login():
                 for linea in texto:
                     pwd = linea[:-1]
 
-            #password = request.form['password']
+            
             password = hashlib.sha512((request.form['password']).encode('utf-8')).hexdigest()
-            #Encriptamos password para compararla:
 
-
+            #Comprobamos si coinciden las contraseñas
             if password == pwd:
 
                 response = make_response(redirect(url_for('home')))
@@ -104,13 +96,11 @@ def login():
                 return response
 
             else:
-                #Algo de contraseña invalida
+                #No coinciden las contraseñas
                 return render_template('login.html', title = "Sign In", categories=getCategories())
         
         else:
-            # aqui se le puede pasar como argumento un mensaje de login invalido
-
-            #USUARIO NO EXISTE
+            #Usuario no existe
             return render_template('login.html', title = "Sign In", categories=getCategories())
     else:
         nombre = request.cookies.get('usuario')
@@ -121,40 +111,40 @@ def login():
         print (request.referrer, file=sys.stderr)
         return render_template('login.html', title = "Sign In", nombre = nombre, categories=getCategories())
 
+
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
     session['usuario'] = None
-    session.modified=False
     session.pop('usuario', None)
     session.pop('carrito', None)
     session.pop('precio', None)
     session.pop('num_productos_car', 0)
     session.pop('num_items',0)
-
+    session.modified=True
 
     return redirect(url_for('home'))
 
+
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
-
 
     if 'username' in request.form:
 
         username = request.form['username']
 
+        #Comprobamos si existe el usuario
         if os.path.isdir("app/users/" + username):
 
-            #Meter mensaje de error
-            #Usuario ya existe
-            flash("Ya existe el usuario")
+            #Si ya existe no lo registramos
             return render_template('signup.html', title = "Sign Up")
 
         else:
-
+            #si no existe creamos la carpeta para dicho usuario
             os.mkdir("app/users/" + username)
 
             route = "app/users/" + username + "/data.dat"
 
+            #Encriptamos la password
             password =  hashlib.sha512((request.form['pwd']).encode('utf-8')).hexdigest()
 
             file = open(route, "w")
@@ -184,6 +174,7 @@ def filmdescription():
     catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
     catalogue = json.loads(catalogue_data)
 
+    #obtenemos el id de la pelicula requerida y la buscamos en el catalogo
     movie_id =  request.args.get('movie_id')
 
     for item in catalogue['peliculas']:
@@ -200,23 +191,30 @@ def comprar(movie_id):
 
     for item in catalogue['peliculas']:
         if int(movie_id) == item['id']:
+
+            #Añadimos la pelicula al carrito
             if 'carrito' not in session:
                 session['carrito'] = []
             session['carrito'].append(movie_id)
 
+            #La sumamos al precio total 
             if 'precio' not in session:
                     session['precio'] = 0
             session['precio'] += item['precio']
+
+            #Añadimos uno al numero de ese producto en el carrito
             if 'num_productos_car' not in session:
                 session['num_productos_car'] = []
                 for num_movies in range(len(catalogue['peliculas'])):
                     session['num_productos_car'].append(0)
             session['num_productos_car'][int(movie_id)-1] += 1
 
-
+            #Añadimos 1 al numero de items total del carrito
             if 'num_items' not in session:
                 session['num_items'] = 0
             session['num_items'] += 1
+
+            session.modified=True
 
             break
 
@@ -224,25 +222,26 @@ def comprar(movie_id):
 
 @app.route('/category', methods=['GET', 'POST'])
 def category():
-
-    title =  request.args.get('nombre')
-
     catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
     catalogue = json.loads(catalogue_data)
 
+    #Obtenemos el nombre de la categoria que se ha solicitado
+    title =  request.args.get('nombre')
+
     movies = []
 
+    #Añadimos las peliculas de esa categoria
     for movie in catalogue['peliculas']:
         if movie['categoria'] == title:
             movies.append(movie)
 
-
-    
     return render_template('category.html', title = title, movies=movies, categories= getCategories())
+
 
 @app.route('/historial', methods=['GET', 'POST'])
 def historial():
 
+    #Comrpobamos que el usuario este loggeado
     if session['usuario'] != None:
         route = "app/users/" + session['usuario'] + "/data.dat"
         with open(route) as data:
@@ -252,15 +251,22 @@ def historial():
 
         route = "app/users/" + session['usuario'] + "/historial.json"
 
+        #Comprobamos que exista el fichero y lo leemos
         if os.path.isfile(route):
 
             historial_data = open(route, encoding="utf-8").read()
             historial = json.loads(historial_data)
 
-            return render_template('historial.html', title='Historial de Compra', historial=historial, msg= None, categories=getCategories(), saldo=saldo)
+            msg=None
+
+            #Si el historial esta vacio, no ha habido compras
+            if historial == {}:
+                msg="No se ha realizado ninguna compra"
+
+            return render_template('historial.html', title='Historial de Compra', historial=historial, msg= msg, categories=getCategories(), saldo=saldo)
 
         else:
-            return render_template('historial.html', title='Historial de Compra',msg="No se ha realizado ninguna compra", categories=getCategories(), saldo=saldo)
+            return redirect(url_for('home'))
     
     else:
         return redirect(url_for('home'))
@@ -270,6 +276,7 @@ def aumentarSaldo():
 
     username = session['usuario']
 
+    #Abrimos el data.dat del usuario que vamos a modificar
     if os.path.isdir("app/users/" + username):
 
         route = "app/users/" + username + "/data.dat"
@@ -279,6 +286,7 @@ def aumentarSaldo():
             for linea in texto:
                 saldo = linea[:-1]
 
+        #Añadimos 10 euros de saldo
         nuevo_saldo = float(saldo) + 10
         data = []
         with open(route, 'r') as f:
@@ -287,7 +295,7 @@ def aumentarSaldo():
 
         with open(route, "w") as file:
 
-            file.write(data[0]+ os.linesep)
+            file.write(data[0] + os.linesep)
             file.write(data[1] + os.linesep)
             file.write(data[2] + os.linesep)
             file.write(data[3] + os.linesep)
@@ -299,10 +307,11 @@ def aumentarSaldo():
 @app.route('/search', methods=['GET', 'POST'])
 def search():
 
-    search =  request.args.get('search')
-
     catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
     catalogue = json.loads(catalogue_data)
+
+    #Texto que se va a buscar
+    search =  request.args.get('search')
 
     movies = []
     msg = None
@@ -310,16 +319,23 @@ def search():
     if 'search' in request.form:
 
         search = request.form['search']
+
+        #Lo ponemos en minusculas para hacerlo insensible
         search = search.lower()
 
         for movie in catalogue['peliculas']:
+            #Ponemos los titulos de las peliculas en minuscula
             titulo = movie['titulo'].lower()
+
+            #Buscamos la cadena en ellos
             if titulo.find(search) >= 0:
                 movies.append(movie)
     else:
+        #Si no se introduce nada en la busqueda mostramos todas las peliculas 
         for movie in catalogue['peliculas']:
             movies.append(movie)
 
+    #Si ninguna pelicula concuerda con la busqueda 
     if len(movies) == 0:
 
         msg = "No hay peliculas asociadas a la busqueda '" + search + "'"
@@ -330,6 +346,7 @@ def search():
 def carrito():
     catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
     catalogue = json.loads(catalogue_data)
+
     movies=catalogue['peliculas']
     lista = []
 
@@ -351,17 +368,19 @@ def carrito():
 
 @app.route('/carrito/<movie_id>_removed', methods=['GET', 'POST'])
 def eliminar(movie_id):
+
     catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
     catalogue = json.loads(catalogue_data)
     movies=catalogue['peliculas']
 
+    #Eliminamos un articulo del carrito
     if movies[int(movie_id)] != None:
         session['carrito'].remove(movie_id)
         session['precio'] -= movies[int(movie_id)]['precio']
         session['num_productos_car'][int(movie_id) - 1] -= 1
         session['num_items'] -= 1
+        session.modified = True
 
-    session.modified = True
     return redirect(url_for('carrito'))
 
 @app.route('/carrito/<movie_id>_added', methods=['GET', 'POST'])
@@ -370,11 +389,13 @@ def añadir(movie_id):
     catalogue = json.loads(catalogue_data)
     movies=catalogue['peliculas']
 
+    #Añadimos un articulo del carrito
     if movies[int(movie_id)] != None:
         session['carrito'].append(movie_id)
         session['precio'] += movies[int(movie_id)]['precio']
         session['num_productos_car'][int(movie_id) - 1] += 1
         session['num_items'] += 1
+        session.modified=True
 
     return redirect(url_for('carrito'))
 
@@ -389,6 +410,7 @@ def realizar_pedido():
 
         username = session['usuario']
 
+        #Si el usuario existe, obtenemos su saldo
         if os.path.isdir("app/users/" + username):
 
             route = "app/users/" + username + "/data.dat"
@@ -399,9 +421,8 @@ def realizar_pedido():
                     saldo = linea[:-1]
 
         
-
+        #Si el precio es mayor que el saldo mostramnos mensaje de error
         if float(saldo) < float(session['precio']):
-            flash(u'Saldo insuficiente', 'error')
 
             lista = []
 
@@ -423,6 +444,7 @@ def realizar_pedido():
 
             return render_template('carrito.html', title = "Carrito", lista_carrito = lista, num_elementos = session['num_productos_car'], precio="{0:.2f}".format(session['precio']), categories=getCategories(), msg = msg)
 
+        #Calculamos nuevo saldo y lo escribimos en data.dat
         nuevo_saldo = float(saldo) - float(session['precio'])
         data = []
         with open(route, 'r') as f:
@@ -437,7 +459,7 @@ def realizar_pedido():
             file.write(data[3] + os.linesep)
             file.write(str(round(nuevo_saldo, 2)) + os.linesep)
 
-
+        #Añadimos al historial las peliculas compradas
         route = "app/users/" + session['usuario'] + "/historial.json"
 
         if os.path.isfile(route):
@@ -476,12 +498,14 @@ def realizar_pedido():
         file = open(route, "w")
         file.write(json.dumps(historial, indent=2))
 
+        #Reiniciamos las variables de session
         session['carrito'] = []
         session['num_productos_car'] = []
         for num_movies in range(len(catalogue['peliculas'])):
             session['num_productos_car'].append(0)
         session['precio'] = 0
         session['num_items'] = 0
+        session.modified=True
 
         return redirect(url_for('carrito'))
 
@@ -492,6 +516,8 @@ def realizar_pedido():
 
 @app.route('/connected_users')
 def connected_user():
+
+    #Tomamos un numero aleatorio de usuarios
     num_users = randint(100, 1000)
 
     return "Usuarios Conectados: " + str(num_users)

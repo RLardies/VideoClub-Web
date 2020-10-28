@@ -34,7 +34,12 @@ function validacion(){
 	}
 
 	if( pwd == null || pwd.length < 7 || /^\s+$/.test(pwd)) {
-		alert('[ERROR] El correo introducido no es valido');
+		alert('[ERROR] La password introducida no es valida');
+ 		return false;
+	}
+
+	if( creditcard.length != 16 ) {
+		alert('[ERROR] La tarjeta introducida no es valida');
  		return false;
 	}
 
