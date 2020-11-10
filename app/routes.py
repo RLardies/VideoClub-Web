@@ -230,32 +230,46 @@ def category():
         app.root_path, 'catalogue/catalogue.json'), encoding="utf-8").read()
     catalogue = json.loads(catalogue_data)
 
-    # Obtenemos el nombre de la categoria que se ha solicitado
-    title = request.args.get('nombre')
-
     movies = []
+    # Obtenemos el nombre de la categoria que se ha solicitado
+    cat = request.args.get('nombre')
 
-    # Añadimos las peliculas de esa categoria
-    for movie in catalogue['peliculas']:
-        if movie['categoria'] == title:
+    result = database.db_category(cat)
+    if result:
+        for item in result:
+            movie = {}
+            movie['id'] = item[0]
+            movie['titulo'] = item[1]
+            movie['poster'] = ""
             movies.append(movie)
 
-    return render_template('category.html',
-                           title=title,
+    
+
+    # Añadimos las peliculas de esa categoria
+    #for movie in catalogue['peliculas']:
+    #    if movie['categoria'] == cat:
+    #        movies.append(movie)
+
+        return render_template('category.html',
+                           title=cat,
                            movies=movies,
+                           categories=getCategories())
+    else:
+        return render_template('home.html',
+                           title="Home",
+                           movies=catalogue['peliculas'],
                            categories=getCategories())
 
 
 @app.route('/historial', methods=['GET', 'POST'])
 def historial():
+    userid = session['userid']
 
     # Comrpobamos que el usuario este loggeado
     if session['usuario'] is not None:
-        route = "app/users/" + session['usuario'] + "/data.dat"
-        with open(route) as data:
-            texto = itertools.islice(data, 4, 5)
-            for linea in texto:
-                saldo = linea[:-1]
+        result = database.db_obtenerSaldo(userid)
+        saldo = float(result[0][0])
+        saldo = "{0:.2f}".format(saldo)
 
         route = "app/users/" + session['usuario'] + "/historial.json"
 
@@ -286,32 +300,8 @@ def historial():
 @app.route('/historial/aumentar_saldo', methods=['GET', 'POST'])
 def aumentarSaldo():
 
-    username = session['usuario']
-
-    # Abrimos el data.dat del usuario que vamos a modificar
-    if os.path.isdir("app/users/" + username):
-
-        route = "app/users/" + username + "/data.dat"
-
-        with open(route) as data:
-            texto = itertools.islice(data, 4, 5)
-            for linea in texto:
-                saldo = linea[:-1]
-
-        # Añadimos 10 euros de saldo
-        nuevo_saldo = float(saldo) + 10
-        data = []
-        with open(route, 'r') as f:
-            for linea in f:
-                data.append(linea[:-1])
-
-        with open(route, "w") as file:
-
-            file.write(data[0] + os.linesep)
-            file.write(data[1] + os.linesep)
-            file.write(data[2] + os.linesep)
-            file.write(data[3] + os.linesep)
-            file.write(str(round(nuevo_saldo, 2)) + os.linesep)
+    userid = session['userid']
+    result = database.db_aumentarSaldo(userid)
 
     return redirect(url_for('historial'))
 
@@ -351,13 +341,6 @@ def search():
             return render_template('search.html', title="Búsqueda",
                            movies=movies, categories=getCategories(), msg=msg)
 
-        #for movie in catalogue['peliculas']:
-            # Ponemos los titulos de las peliculas en minuscula
-        #    titulo = movie['titulo'].lower()
-
-            # Buscamos la cadena en ellos
-        #    if titulo.find(search) >= 0:
-        #        movies.append(movie)
     else:
          return render_template('home.html',
                            title="Home",

@@ -157,3 +157,81 @@ def db_search(search):
         print("-"*60)
 
         return False
+
+def db_category(cat):
+    if cat == 'Accion':
+        cat = 'Action'
+    elif cat == 'Aventura':
+        cat = 'Adventure'
+    elif cat == 'Ciencia Ficcion':
+        cat = 'Sci-Fi'
+
+    try:
+        # conexion a la base de datos
+        db_conn = None
+        db_conn = db_engine.connect()
+
+        db_cat = f"select m.movieid, movietitle from imdb_movies as m, imdb_moviegenres as ig, genres as g "
+        db_cat += f"where m.movieid = ig.movieid and ig.genre = g.genre_id and genre_name = '{cat}'"
+        db_cat += f" fetch first 3 rows only"
+        
+        db_result = db_conn.execute(db_cat)
+        db_conn.close()
+
+        return list(db_result)
+
+    except:
+        if db_conn is not None:
+            db_conn.close()
+        print("Exception in DB access:")
+        print("-"*60)
+        traceback.print_exc(file=sys.stderr)
+        print("-"*60)
+
+        return False
+
+def db_aumentarSaldo(userid):
+    try:
+        # conexion a la base de datos
+        db_conn = None
+        db_conn = db_engine.connect()
+
+        db_cat = f"update customers set saldo = saldo + 20 where customers.customerid = {userid}" 
+        
+        db_result = db_conn.execute(db_cat)
+        db_conn.close()
+
+        return True
+
+    except:
+        if db_conn is not None:
+            db_conn.close()
+        print("Exception in DB access:")
+        print("-"*60)
+        traceback.print_exc(file=sys.stderr)
+        print("-"*60)
+
+        return False
+
+def db_obtenerSaldo(userid):
+    try:
+        # conexion a la base de datos
+        db_conn = None
+        db_conn = db_engine.connect()
+
+        db_cat = f"select saldo from customers where customers.customerid = {userid}" 
+        
+        db_result = db_conn.execute(db_cat)
+        db_conn.close()
+
+        return list(db_result)
+
+    except:
+        if db_conn is not None:
+            db_conn.close()
+        print("Exception in DB access:")
+        print("-"*60)
+        traceback.print_exc(file=sys.stderr)
+        print("-"*60)
+
+        return False
