@@ -9,7 +9,7 @@
 
   
 
-  {% if msg == None %}
+  {% if msg != None %}
 
     <div class="row">
       <div class="column1"> </div>
@@ -33,7 +33,6 @@
     <a id='{{ item.id }}' href="{{url_for('filmdescription', movie_id=item.id) }}"></a>
 
       <script>
-
         if (i % (elemscolumn) != 0) {
           show({{ item.titulo|tojson }}, {{ item.poster|tojson }}, colnum, {{item.id }});
           i += 1;

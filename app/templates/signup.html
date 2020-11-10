@@ -6,6 +6,9 @@
 
 {% block content %}
 <body>
+{% if msg %}
+    <h2>{{mensaje}}</h2>
+{% endif %}
 
 <div class="content">
   
@@ -33,9 +36,9 @@
 
     <label for="gender" >Gender</label>
     <select id="gender" name="gender">
-      <option value="notsay">Rather not say</option>
-      <option value="male">Male</option>
-      <option value="female">Female</option>
+      <option value="N">Rather not say</option>
+      <option value="M">Male</option>
+      <option value="F">Female</option>
     </select>
 
     <input type="submit" value="Submit">
