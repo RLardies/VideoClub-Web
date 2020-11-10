@@ -343,7 +343,7 @@ def search():
                 movies.append(movie)
             
             return render_template('search.html', title="Búsqueda",
-                           movies=movies, categories=getCategories())
+                           movies=movies, categories=getCategories(), msg=msg)
         
         else:
             msg = "No hay peliculas asociadas a la busqueda '" + search + "'"
