@@ -1,0 +1,180 @@
+{ "peliculas": 
+  [ 
+    { 
+			"id": 1,
+			"titulo": "Baby driver",
+      "poster": "static/images/baby-driver.jpg",
+      "director": "George Lucas",
+      "precio": 18.99,
+      "categoria": "Accion",
+      "año": 1999,
+      "actores": 
+      [
+        { "nombre": "Jake Lloyd",
+          "personaje": "Anakin Skywalker",
+          "foto": "imagenes/anakin.jpg"
+        }
+      ]
+    },
+    { 
+      "id": 2,
+      "titulo": "Moonlight",
+      "poster": "static/images/moonlight.jpg",
+      "director": "George Lucas",
+      "precio": 18.99,
+      "categoria": "Aventura",
+      "año": 1999,
+      "actores": 
+      [
+        { "nombre": "Jake Lloyd",
+          "personaje": "Anakin Skywalker",
+          "foto": "imagenes/anakin.jpg"
+        }
+      ]
+    },
+    { 
+      "id": 3,
+      "titulo": "Avatar",
+      "poster": "static/images/avatar.jpg",
+      "director": "George Lucas",
+      "precio": 18.99,
+      "categoria": "Ciencia Ficcion",
+      "año": 1999,
+      "actores": 
+      [
+        { "nombre": "Jake Lloyd",
+          "personaje": "Anakin Skywalker",
+          "foto": "imagenes/anakin.jpg"
+        }
+      ]
+    },
+    { 
+      "id": 4,
+      "titulo": "Fight Club",
+      "poster": "static/images/fight-club.jpg",
+      "director": "George Lucas",
+      "precio": 18.99,
+      "categoria": "Drama",
+      "año": 1999,
+      "actores": 
+      [
+        { "nombre": "Jake Lloyd",
+          "personaje": "Anakin Skywalker",
+          "foto": "imagenes/anakin.jpg"
+        }
+      ]
+    },
+    { 
+      "id": 5,
+      "titulo": "Harry Potter",
+      "poster": "static/images/harry-potter.jpg",
+      "director": "George Lucas",
+      "precio": 18.99,
+      "categoria": "Ciencia Ficcion",
+      "año": 1999,
+      "actores": 
+      [
+        { "nombre": "Jake Lloyd",
+          "personaje": "Anakin Skywalker",
+          "foto": "imagenes/anakin.jpg"
+        }
+      ]
+    },
+    { 
+      "id": 6,
+      "titulo": "Angeles y demonios",
+      "poster": "static/images/angeles-y-demonios.jpg",
+      "director": "George Lucas",
+      "precio": 18.99,
+      "categoria": "Aventura",
+      "año": 1999,
+      "actores": 
+      [
+        { "nombre": "Jake Lloyd",
+          "personaje": "Anakin Skywalker",
+          "foto": "imagenes/anakin.jpg"
+        }
+      ]
+    },
+    { 
+      "id": 7,
+      "titulo": "Passengers",
+      "poster": "static/images/passengers.jpg",
+      "director": "George Lucas",
+      "precio": 18.99,
+      "categoria": "Drama",
+      "año": 1999,
+      "actores": 
+      [
+        { "nombre": "Jake Lloyd",
+          "personaje": "Anakin Skywalker",
+          "foto": "imagenes/anakin.jpg"
+        }
+      ]
+    },
+    { 
+      "id": 8,
+      "titulo": "Cisne negro",
+      "poster": "static/images/cisne-negro.jpg",
+      "director": "George Lucas",
+      "precio": 18.99,
+      "categoria": "Drama",
+      "año": 1999,
+      "actores": 
+      [
+        { "nombre": "Jake Lloyd",
+          "personaje": "Anakin Skywalker",
+          "foto": "imagenes/anakin.jpg"
+        }
+      ]
+    },
+    { 
+      "id": 9,
+      "titulo": "Baby driver",
+      "poster": "static/images/baby-driver.jpg",
+      "director": "George Lucas",
+      "precio": 18.99,
+      "categoria": "Ciencia Ficcion",
+      "año": 1999,
+      "actores": 
+      [
+        { "nombre": "Jake Lloyd",
+          "personaje": "Anakin Skywalker",
+          "foto": "imagenes/anakin.jpg"
+        }
+      ]
+    },
+     { 
+      "id": 10,
+      "titulo": "Malefica",
+      "poster": "static/images/malefica.jpg",
+      "director": "George Lucas",
+      "precio": 18.99,
+      "categoria": "Ciencia Ficcion",
+      "año": 1999,
+      "actores": 
+      [
+        { "nombre": "Jake Lloyd",
+          "personaje": "Anakin Skywalker",
+          "foto": "imagenes/anakin.jpg"
+        }
+      ]
+    },
+     { 
+      "id": 11,
+      "titulo": "Avengers",
+      "poster": "static/images/avengers.jpg",
+      "director": "George Lucas",
+      "precio": 18.99,
+      "categoria": "Ciencia Ficcion",
+      "año": 1999,
+      "actores": 
+      [
+        { "nombre": "Jake Lloyd",
+          "personaje": "Anakin Skywalker",
+          "foto": "imagenes/anakin.jpg"
+        }
+      ]
+    }
+  ]
+}

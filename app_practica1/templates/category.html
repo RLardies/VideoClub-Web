@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<body>
+
+<div class="content">
+  <h2 class="subtitulos">{{ title }}</h2>
+
+  
+  <div class="row">
+    <div class="column1"> </div>
+    <div class="column2"> </div>
+    <div class="column3"> </div>
+    <div class="column4"> </div>
+
+  </div>
+  <script>
+  
+    var len = Object.keys({{ movies|tojson }}).length;
+    var elemscolumn = 4;
+    var colnum = 1;
+    var i = 1;
+
+
+  </script>
+
+  {% for item in movies %}
+
+  <a id='{{ item.id }}' href="{{url_for('filmdescription', movie_id=item.id) }}"></a>
+
+    <script>
+
+      if (i % (elemscolumn) != 0) {
+        show({{ item.titulo|tojson }}, {{ item.poster|tojson }}, colnum, {{item.id }});
+        i += 1;
+        colnum +=1;
+      }
+      else{
+        show({{ item.titulo|tojson }}, {{ item.poster|tojson }}, colnum, {{ item.id }});
+        i = 1;
+        colnum = 1;
+      }
+    </script>
+  {% endfor %}  
+  
+  
+</div>
+
+
+
+</body>
+</html>
+
+{% endblock %}

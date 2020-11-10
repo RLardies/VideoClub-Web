@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<body>
+
+<div class="content">
+
+  <script defer src="{{ url_for('static', filename='desplegable.js') }}"></script>
+  
+  <h2 class="subtitulos">{{ title }}</h2> 
+    <div>
+      <b class="info">Saldo Total: {{ saldo }}</b>
+      <button class="buttonSaldo" onclick="location.href='{{url_for('aumentarSaldo')}}'">&#43; 10</button>
+    </div>
+    <table class="table">
+     
+      {% if msg == None %}
+      {% for pedido in historial.keys() %}
+        <tr class="despliegue"> 
+          <td class=dateorder colspan="4"> Pedido de {{pedido}} </td>
+        </tr>
+          <th>Portada</th>
+          <th>Titulo</th>
+          <th>Cantidad </th>
+          <th>Precio/unidad</th>
+        </tr>
+
+        {% for item in historial[pedido] %}
+          <tr>
+            <td><img class="Img_carrito" src="{{item.poster}}" alt ="item.poster"></td>
+            <td>{{item.titulo}}</td>
+            <td>{{item.cantidad}}</td>
+            <td>{{item.precio}}</td>
+          </tr>
+        {% endfor %}
+        <tr class="findespliegue">
+          <td colspan="4"></td>
+        </tr>
+      {% endfor %}
+
+    </table>
+
+    {% else %}
+    </table>
+    
+    <cattext>
+      <b class="info">{{ msg }}</b>
+    </cattext>
+  {% endif %}
+
+  
+</div>
+</body>
+</html>
+
+{% endblock %}

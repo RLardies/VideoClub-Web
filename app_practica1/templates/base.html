@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} {% endblock %} Filmify</title>
+    <!-- Uso de url_for para obtener la ruta de elementos de la página -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='estilo.css') }}">
+    <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script defer src="{{ url_for('static', filename='fichero.js') }}"></script>
+    <script src="{{ url_for('static', filename='showcatalogue.js') }}"></script>
+    <script src="{{ url_for('static', filename='imageclick.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='banner.js') }}"></script>
+    
+    
+    <a class="cart-icon" href="{{url_for('carrito')}}">
+        <span id="totalItems"> {{ session['num_items'] }}</span>
+    </a>
+
+
+</head>
+<body>
+    <div>
+        <a href="{{ url_for('home') }}" >Home</a>
+        {% if not session['usuario'] %}
+        <a href="{{ url_for('login') }}" >Sign In</a></div>
+        <span >Usuario: An&oacutenimo</span>
+        {% else %}
+        <a href="{{ url_for('logout') }}">Log out</a></div>
+        <span >Usuario: {{ session['usuario'] }}</span>
+        {% endif%}
+
+        <header> 
+            <nav>
+            <span id="connected_users"></span>
+
+            {% if not session['usuario'] %}
+                <a href="{{url_for('signup') }}">Sign up</a>
+            {% endif %}
+ 
+            </nav>
+            <p>FILMIFY</p>
+        </header>
+
+
+    {% block content%} {% endblock %}
+
+
+<aside>
+    <h2 class="subtitulos">Categories</h2>
+    <form  action="{{url_for('search') }}" method="post">
+     <input type="search" name="search" placeholder="Search..">
+     <input  id="search" type="submit" value="Search">
+    </form>
+
+   
+
+    <ul class="cats">
+      {% for category in categories %}
+        <li><a href="{{ url_for('category', nombre = category )}}" >{{ category }}</a></li>
+      {% endfor %} 
+    </ul>
+
+    {% if  session['usuario'] %}
+        <a id=historial href="{{ url_for('historial') }}" >Historial</a>
+    {% endif%}
+
+    
+</aside>
+
+
+<footer>
+  <h1>copyright© 2020 Eva Lacaba, Rodrigo Lardiés </h1>
+</footer>
+
+
+</body>
+
+</html>
