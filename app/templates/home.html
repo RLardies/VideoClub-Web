@@ -27,7 +27,6 @@
   {% for item in movies %}
 
   <a id='{{ item.id }}' href="{{url_for('filmdescription', movie_id=item.id) }}"></a>
-
     <script>
 
       if (i % (elemscolumn) != 0) {

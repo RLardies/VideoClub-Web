@@ -12,6 +12,13 @@ import hashlib
 from random import randint
 import itertools
 import time
+import traceback
+from sqlalchemy import create_engine
+from sqlalchemy import Table, Column, Integer, String, MetaData, ForeignKey, text
+from sqlalchemy.sql import select
+
+db_engine = create_engine("postgresql://alumnodb:alumnodb@localhost/si1", echo=False)
+db_meta = MetaData(bind=db_engine)
 
 # obtenemos todas las peliculas de catalogue.json
 
@@ -55,12 +62,6 @@ def home():
 
     if 'precio' not in session:
         session['precio'] = 0
-
-    if 'num_productos_car' not in session:
-        session['num_productos_car'] = []
-
-    for num_movies in range(len(catalogue['peliculas'])):
-        session['num_productos_car'].append(0)
 
     return render_template('home.html',
                            title="Home",
@@ -146,8 +147,28 @@ def signup():
                 return render_template('signup.html', title="Sign Up", msg = "Something went wrong") 
         
     else:
-        return render_template('signup.html', title="Sign Up", )
+       return render_template('signup.html', title="Sign Up", )
 
+def filmdescriptionAux(movieid):
+
+    result = database.db_filmdescription(movieid)
+    print("RESULTADO")
+    print(result)
+
+    if result != False:
+        item = {}
+        item['id'] = movieid
+        item['titulo'] = result[0][0]
+        item['director'] = result[0][3]
+        item['precio'] = result[0][2]
+        item['categoria'] = result[0][5]
+        item['año'] = result[0][1]
+        item['pais'] = result[0][6]
+        item['idioma'] = result[0][4]
+
+        return item
+    else:
+        return None
 
 @app.route('/filmdescription', methods=['GET', 'POST'])
 def filmdescription():
@@ -158,21 +179,13 @@ def filmdescription():
 
     # obtenemos el id de la pelicula requerida y la buscamos en el catalogo
     movie_id = request.args.get('movie_id')
+    prodid = database.getprodid(movie_id)
 
     #for item in catalogue['peliculas']:
     #    if item['id'] == int(movie_id):
     #        break
-
-    result = database.db_filmdescription(movie_id)
-    item = {}
-    item['id'] = movie_id
-    item['titulo'] = result[0][0]
-    item['director'] = result[0][3]
-    item['precio'] = result[0][2]
-    item['categoria'] = result[0][5]
-    item['año'] = result[0][1]
-    item['pais'] = result[0][6]
-    item['idioma'] = result[0][4]
+ 
+    item = filmdescriptionAux(prodid[0][0])
 
     if item is None:
         return render_template('home.html',
@@ -188,38 +201,18 @@ def filmdescription():
 @app.route('/filmdescription/<movie_id>_buy', methods=['GET', 'POST'])
 def comprar(movie_id):
 
-    catalogue_data = open(os.path.join(
-        app.root_path, 'catalogue/catalogue.json'), encoding="utf-8").read()
-    catalogue = json.loads(catalogue_data)
+    if 'userid' not in session:
+        return render_template('login.html',
+                                title="Sign In",
+                                categories=getCategories())
+    userid = session['userid']
+    result = database.db_comprar(userid, movie_id)
 
-    for item in catalogue['peliculas']:
-        if int(movie_id) == item['id']:
+    if 'num_items' not in session:
+        session['num_items'] = 0
 
-            # Añadimos la pelicula al carrito
-            if 'carrito' not in session:
-                session['carrito'] = []
-            session['carrito'].append(movie_id)
-
-            # La sumamos al precio total
-            if 'precio' not in session:
-                session['precio'] = 0
-            session['precio'] += item['precio']
-
-            # Añadimos uno al numero de ese producto en el carrito
-            if 'num_productos_car' not in session:
-                session['num_productos_car'] = []
-                for num_movies in range(len(catalogue['peliculas'])):
-                    session['num_productos_car'].append(0)
-            session['num_productos_car'][int(movie_id)-1] += 1
-
-            # Añadimos 1 al numero de items total del carrito
-            if 'num_items' not in session:
-                session['num_items'] = 0
-            session['num_items'] += 1
-
-            session.modified = True
-
-            break
+    session['num_items'] += 1
+    session.modified=True
 
     return redirect(url_for('filmdescription', movie_id=movie_id))
 
@@ -263,35 +256,21 @@ def category():
 
 @app.route('/historial', methods=['GET', 'POST'])
 def historial():
+    # FALTA POR INTEGRAR EL HISTORIAL
     userid = session['userid']
 
-    # Comrpobamos que el usuario este loggeado
+    # Comprobamos que el usuario este loggeado
     if session['usuario'] is not None:
         result = database.db_obtenerSaldo(userid)
         saldo = float(result[0][0])
         saldo = "{0:.2f}".format(saldo)
 
-        route = "app/users/" + session['usuario'] + "/historial.json"
+        #result = database.db_gethistorial(userid)
 
-        # Comprobamos que exista el fichero y lo leemos
-        if os.path.isfile(route):
-
-            historial_data = open(route, encoding="utf-8").read()
-            historial = json.loads(historial_data)
-
-            msg = None
-
-            # Si el historial esta vacio, no ha habido compras
-            if historial == {}:
-                msg = "No se ha realizado ninguna compra"
-
-            return render_template('historial.html',
-                                   title='Historial de Compra',
-                                   historial=historial, msg=msg,
-                                   categories=getCategories(), saldo=saldo)
-
-        else:
-            return redirect(url_for('home'))
+        return render_template('historial.html',
+                                    title='Historial de Compra',
+                                    msg="Aún no hay nada aquí",
+                                    categories=getCategories(), saldo=saldo)
 
     else:
         return redirect(url_for('home'))
@@ -349,12 +328,6 @@ def search():
 
 @app.route('/carrito', methods=['GET', 'POST'])
 def carrito():
-    catalogue_data = open(os.path.join(
-        app.root_path, 'catalogue/catalogue.json'), encoding="utf-8").read()
-    catalogue = json.loads(catalogue_data)
-
-    movies = catalogue['peliculas']
-    lista = []
 
     if 'carrito' not in session:
         session['carrito'] = []
@@ -365,50 +338,46 @@ def carrito():
     if 'num_productos_car' not in session:
         session['num_productos_car'] = []
 
-    for movie in movies:
-        if str(movie['id']) in session['carrito']:
+    userid = session['userid']
+    result = database.db_getorders(userid)
+    lista = []
+    precio = 0
+
+    if result != False:
+        for item in result:
+            result = database.db_getmovieid(item[0])
+            movie = filmdescriptionAux(result[0][0])
+            movie['cantidad'] = item[2]
+            precio += movie['precio']*item[2]
             lista.append(movie)
+
+        session['precio'] = precio
 
     return render_template('carrito.html', title="Carrito",
                            lista_carrito=lista,
-                           num_elementos=session['num_productos_car'],
                            precio="{0:.2f}".format(session['precio']),
                            categories=getCategories(),  msg="")
 
 
 @app.route('/carrito/<movie_id>_removed', methods=['GET', 'POST'])
 def eliminar(movie_id):
+    userid = session['userid']
 
-    catalogue_data = open(os.path.join(
-        app.root_path, 'catalogue/catalogue.json'), encoding="utf-8").read()
-    catalogue = json.loads(catalogue_data)
-    movies = catalogue['peliculas']
-
-    # Eliminamos un articulo del carrito
-    if movies[int(movie_id)] is not None:
-        session['carrito'].remove(movie_id)
-        session['precio'] -= movies[int(movie_id)]['precio']
-        session['num_productos_car'][int(movie_id) - 1] -= 1
+    result = database.db_eliminar(userid, movie_id)
+    if session['num_items'] > 0:
         session['num_items'] -= 1
-        session.modified = True
+    session.modified = True
 
     return redirect(url_for('carrito'))
 
 
 @app.route('/carrito/<movie_id>_added', methods=['GET', 'POST'])
 def añadir(movie_id):
-    catalogue_data = open(os.path.join(
-        app.root_path, 'catalogue/catalogue.json'), encoding="utf-8").read()
-    catalogue = json.loads(catalogue_data)
-    movies = catalogue['peliculas']
+    userid = session['userid']
 
-    # Añadimos un articulo del carrito
-    if movies[int(movie_id)] is not None:
-        session['carrito'].append(movie_id)
-        session['precio'] += movies[int(movie_id)]['precio']
-        session['num_productos_car'][int(movie_id) - 1] += 1
-        session['num_items'] += 1
-        session.modified = True
+    result = database.db_añadir(userid, movie_id)
+    session['num_items'] += 1
+    session.modified = True
 
     return redirect(url_for('carrito'))
 
@@ -416,113 +385,39 @@ def añadir(movie_id):
 @app.route('/finpedido', methods=['GET', 'POST'])
 def realizar_pedido():
 
-    catalogue_data = open(os.path.join(
-        app.root_path, 'catalogue/catalogue.json'), encoding="utf-8").read()
-    catalogue = json.loads(catalogue_data)
-    movies = catalogue['peliculas']
-
     if 'usuario' in session:
+        userid = session['userid']
 
-        username = session['usuario']
-
-        # Si el usuario existe, obtenemos su saldo
-        if os.path.isdir("app/users/" + username):
-
-            route = "app/users/" + username + "/data.dat"
-
-            with open(route) as data:
-                texto = itertools.islice(data, 4, 5)
-                for linea in texto:
-                    saldo = linea[:-1]
+        result = database.db_finpedido(userid)
+        result2= database.db_obtenerSaldo(userid)
+        saldo = result2[0][0]
+        print(saldo)
 
         # Si el precio es mayor que el saldo mostramnos mensaje de error
         if float(saldo) < float(session['precio']):
 
             lista = []
 
-            if 'carrito' not in session:
-                session['carrito'] = []
+            pedido = database.db_getproductos(userid)
 
-            if 'precio' not in session:
-                session['precio'] = 0
-
-            if 'num_productos_car' not in session:
-                session['num_productos_car'] = []
-
-            for movie in movies:
-                if str(movie['id']) in session['carrito']:
-                    lista.append(movie)
+            for item in pedido:
+                movie = filmdescriptionAux(item[0])
+                movie['cantidad'] = item[2]
+                lista.append(movie)
 
             msg = "Saldo insuficiente"
-
             return render_template('carrito.html', title="Carrito",
                                    lista_carrito=lista,
-                                   num_elementos=session['num_productos_car'],
                                    precio="{0:.2f}".format(session['precio']),
                                    categories=getCategories(), msg=msg)
-
-        # Calculamos nuevo saldo y lo escribimos en data.dat
-        nuevo_saldo = float(saldo) - float(session['precio'])
-        data = []
-        with open(route, 'r') as f:
-            for linea in f:
-                data.append(linea[:-1])
-
-        with open(route, "w") as file:
-
-            file.write(data[0] + os.linesep)
-            file.write(data[1] + os.linesep)
-            file.write(data[2] + os.linesep)
-            file.write(data[3] + os.linesep)
-            file.write(str(round(nuevo_saldo, 2)) + os.linesep)
-
-        # Añadimos al historial las peliculas compradas
-        route = "app/users/" + session['usuario'] + "/historial.json"
-
-        if os.path.isfile(route):
-
-            historial_data = open(route, encoding="utf-8").read()
-            historial = json.loads(historial_data)
+        
         else:
-            historial = {}
+            result3 = database.db_setstatus(result[0][0])
+            result4 = database.db_setsaldo(userid, session['precio'])
+            session['num_items'] = 0
+            session.modified=True
 
-        date = time.strftime("%d/%m/%y")
-        if str(date) not in historial:
-            historial[str(date)] = []
-
-        for movie in session['carrito']:
-            in_history = 0
-            item = movies[int(movie)-1]
-
-            if historial[str(date)] != []:
-                for j in historial[str(date)]:
-                    print(j['id'])
-                    print(item['id'])
-                    if j['id'] == item['id']:
-                        in_history = 1
-                        break
-
-            if in_history == 0:
-                item['cantidad'] = 1
-                historial[str(date)].append(item)
-
-            if in_history == 1:
-                index = historial[str(date)].index(j)
-                historial[str(date)][index]['cantidad'] += 1
-
-        file = open(route, "w")
-        file.write(json.dumps(historial, indent=2))
-
-        # Reiniciamos las variables de session
-        session['carrito'] = []
-        session['num_productos_car'] = []
-        for num_movies in range(len(catalogue['peliculas'])):
-            session['num_productos_car'].append(0)
-        session['precio'] = 0
-        session['num_items'] = 0
-        session.modified = True
-
-        return redirect(url_for('carrito'))
+            return redirect(url_for('carrito'))
 
     else:
 

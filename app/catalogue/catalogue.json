@@ -18,11 +18,11 @@
     },
     { 
       "id": 103,
-      "titulo": "Moonlight",
+      "titulo": "'Breaker' Morant (1980)",
       "poster": "static/images/moonlight.jpg",
       "director": "George Lucas",
       "precio": 18.99,
-      "categoria": "Aventura",
+      "categoria": "Drama",
       "año": 1999,
       "actores": 
       [
@@ -175,6 +175,151 @@
           "foto": "imagenes/anakin.jpg"
         }
       ]
+    },
+     { 
+      "id": 336,
+      "titulo": "'Night, Mother (1986)",
+      "poster": "static/images/avengers.jpg",
+      "director": "George Lucas",
+      "precio": 18.99,
+      "categoria": "Drama",
+      "año": 1999,
+      "actores": 
+      [
+        { "nombre": "Jake Lloyd",
+          "personaje": "Anakin Skywalker",
+          "foto": "imagenes/anakin.jpg"
+        }
+      ]
+    },
+     { 
+      "id": 9578,
+      "titulo": "African Queen, The (1951)",
+      "poster": "static/images/avengers.jpg",
+      "director": "George Lucas",
+      "precio": 18.99,
+      "categoria": "Drama",
+      "año": 1999,
+      "actores": 
+      [
+        { "nombre": "Jake Lloyd",
+          "personaje": "Anakin Skywalker",
+          "foto": "imagenes/anakin.jpg"
+        }
+      ]
+    },
+     { 
+      "id": 1575,
+      "titulo": "13th Warrior, The (1999)",
+      "poster": "static/images/avengers.jpg",
+      "director": "George Lucas",
+      "precio": 18.99,
+      "categoria": "Accion",
+      "año": 1999,
+      "actores": 
+      [
+        { "nombre": "Jake Lloyd",
+          "personaje": "Anakin Skywalker",
+          "foto": "imagenes/anakin.jpg"
+        }
+      ]
+    },
+     { 
+      "id": 3102,
+      "titulo": "3 Ninjas: High Noon at Mega Mountain (1998)",
+      "poster": "static/images/avengers.jpg",
+      "director": "George Lucas",
+      "precio": 18.99,
+      "categoria": "Accion",
+      "año": 1999,
+      "actores": 
+      [
+        { "nombre": "Jake Lloyd",
+          "personaje": "Anakin Skywalker",
+          "foto": "imagenes/anakin.jpg"
+        }
+      ]
+    },
+     { 
+      "id": 2475,
+      "titulo": "2001: A Space Odyssey (1968)",
+      "poster": "static/images/avengers.jpg",
+      "director": "George Lucas",
+      "precio": 18.99,
+      "categoria": "Ciencia Ficcion",
+      "año": 1999,
+      "actores": 
+      [
+        { "nombre": "Jake Lloyd",
+          "personaje": "Anakin Skywalker",
+          "foto": "imagenes/anakin.jpg"
+        }
+      ]
+    },
+     { 
+      "id": 2576,
+      "titulo": "2010 (1984)",
+      "poster": "static/images/avengers.jpg",
+      "director": "George Lucas",
+      "precio": 18.99,
+      "categoria": "Ciencia Ficcion",
+      "año": 1999,
+      "actores": 
+      [
+        { "nombre": "Jake Lloyd",
+          "personaje": "Anakin Skywalker",
+          "foto": "imagenes/anakin.jpg"
+        }
+      ]
+    },
+     { 
+      "id": 6364,
+      "titulo": "Abominable Snowman, The (1957)",
+      "poster": "static/images/avengers.jpg",
+      "director": "George Lucas",
+      "precio": 18.99,
+      "categoria": "Ciencia Ficcion",
+      "año": 1999,
+      "actores": 
+      [
+        { "nombre": "Jake Lloyd",
+          "personaje": "Anakin Skywalker",
+          "foto": "imagenes/anakin.jpg"
+        }
+      ]
+    },
+     { 
+      "id": 9578,
+      "titulo": "African Queen, The (1951)",
+      "poster": "static/images/avengers.jpg",
+      "director": "George Lucas",
+      "precio": 18.99,
+      "categoria": "Aventura",
+      "año": 1999,
+      "actores": 
+      [
+        { "nombre": "Jake Lloyd",
+          "personaje": "Anakin Skywalker",
+          "foto": "imagenes/anakin.jpg"
+        }
+      ]
+    },
+     { 
+      "id": 1257,
+      "titulo": "101 Dalmatians (1996)",
+      "poster": "static/images/avengers.jpg",
+      "director": "George Lucas",
+      "precio": 18.99,
+      "categoria": "Aventura",
+      "año": 1999,
+      "actores": 
+      [
+        { "nombre": "Jake Lloyd",
+          "personaje": "Anakin Skywalker",
+          "foto": "imagenes/anakin.jpg"
+        }
+      ]
     }
+
   ]
 }

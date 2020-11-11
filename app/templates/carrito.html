@@ -12,15 +12,19 @@
        <table>
           <tr>
             <th> Película </th>
+            <th>Titulo</th>
             <th> Precio </th>
             <th> Cantidad </th>
+            <th></th>
+            <th></th>
+            <th></th>
           </tr>
           {% for item in lista_carrito %}
           <tr>
              <td><img class="Img_carrito" src ="{{item.poster}}" alt ="item.poster"></td>
              <td> {{item.titulo}} </td>
              <td> {{item.precio}} </td>
-             <td> {{num_elementos[item.id-1]}}</td>
+             <td> {{item.cantidad}}</td>
              <td><span class="mas" onclick="window.location.href='{{url_for('añadir', movie_id = item.id)}}'">&#43;</span></td>
              <td><span class="menos" onclick="window.location.href='{{url_for('eliminar', movie_id = item.id)}}'">&#45;</span></td>
           </tr>
