@@ -1,20 +1,27 @@
-create or replace function getTopVentas() returns text as $$
-
-declare 
-    in_uno alias for $1;
-    in_dos alias for $2;
+create or replace function getTopVentas(anoInicial integer, anoFinal integer)
+    returns table(anoVenta integer, titulo varchar, totalVentas bigint) as $$
 
 begin
 
-    (select  prod_id, extract(year from orderdate) as date, sum(quantity) as ventas from orderdetail natural inner join orders
-    group by  prod_id, date
-    order by ventas desc);
+    return query
 
-    
-        select  prod_id, extract(year from orderdate) as d, sum(quantity) as ventas from orderdetail natural inner join orders
-        where orderdate = '2016'
-        group by  prod_id, d
-        order by ventas desc
-    
+        select distinct on (ventasAno.anoVenta) ventasAno.anoVenta, ventasAno.titulo, ventasAno.totalVentas from (
+
+            select imdb_movies.movietitle as titulo, cast(extract(year from orders.orderdate) as integer) as anoVenta, sum(orderdetail.quantity) as totalVentas
+            from imdb_movies, orders, orderdetail, products
+            where anoInicial >= cast(extract(year from orders.orderdate) as integer) and
+                anoFinal >= cast(extract(year from orders.orderdate) as integer) and
+                orders.orderid = orderdetail.orderid and 
+                orderdetail.prod_id = products.prod_id and 
+                products.movieid = imdb_movies.movieid 
+            group by titulo, anoVenta
+            order by anoVenta, totalVentas desc ) as ventasAno;
+
+
 end;
 $$  language plpgsql;
+
+
+select getTopVentas(2016, 2018);
+
+
