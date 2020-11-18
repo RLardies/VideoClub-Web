@@ -9,31 +9,6 @@ from sqlalchemy.sql import select
 # configurar el motor de sqlalchemy
 db_engine = create_engine("postgresql://alumnodb:alumnodb@localhost/si1", echo=False)
 db_meta = MetaData(bind=db_engine)
-# cargar una tabla
-#db_table_customers = Table('customers', db_meta, autoload=True, autoload_with=db_engine)
-
-def db_listOfMovies1949():
-    try:
-        db_conn = None
-        db_conn = db_engine.connect()
-
-        # Seleccionar las peliculas del anno 1949
-        db_movies_1949 = select([db_table_movies]).where(text("year = '1949'"))
-        db_result = db_conn.execute(db_movies_1949)
-        #db_result = db_conn.execute("Select * from imdb_movies where year = '1949'")
-        
-        db_conn.close()
-        
-        return  list(db_result)
-    except:
-        if db_conn is not None:
-            db_conn.close()
-        print("Exception in DB access:")
-        print("-"*60)
-        traceback.print_exc(file=sys.stderr)
-        print("-"*60)
-
-        return 'Something is broken'
 
 #registra el usuario en nuestra base de datos
 def db_register(data):
@@ -552,3 +527,75 @@ def db_añadir(userid, movie_id):
         print("-"*60)
 
         return False 
+
+def db_gethistorial(userid):
+    try:
+        # conexion a la base de datos
+        db_conn = None
+        db_conn = db_engine.connect()
+
+        db_gethistorial = f"select prod_id, orders.orderid, quantity, orderdate from orders natural join orderdetail"
+        db_gethistorial += f" where status = 'Paid' and customerid = {userid}" 
+        db_result = db_conn.execute(db_gethistorial)
+
+        db_conn.close()
+
+        return list(db_result)
+
+    except:
+        if db_conn is not None:
+            db_conn.close()
+        print("Exception in DB access:")
+        print("-"*60)
+        traceback.print_exc(file=sys.stderr)
+        print("-"*60)
+
+        return False
+
+def db_getfechas(userid):
+    try:
+        # conexion a la base de datos
+        db_conn = None
+        db_conn = db_engine.connect()
+
+        db_getfechas = f"select distinct orderdate from orders natural join orderdetail"
+        db_getfechas += f" where status = 'Paid' and customerid = {userid}" 
+        db_result = db_conn.execute(db_getfechas)
+
+        db_conn.close()
+
+        return list(db_result)
+
+    except:
+        if db_conn is not None:
+            db_conn.close()
+        print("Exception in DB access:")
+        print("-"*60)
+        traceback.print_exc(file=sys.stderr)
+        print("-"*60)
+
+        return False
+
+
+def db_topventas():
+    try:
+        # conexion a la base de datos
+        db_conn = None
+        db_conn = db_engine.connect()
+
+        db_getTopVentas = f"select * from getTopVentas(2017, 2020)"
+        db_result = db_conn.execute(db_getTopVentas)
+
+        db_conn.close()
+
+        return list(db_result)
+
+    except:
+        if db_conn is not None:
+            db_conn.close()
+        print("Exception in DB access:")
+        print("-"*60)
+        traceback.print_exc(file=sys.stderr)
+        print("-"*60)
+
+        return False

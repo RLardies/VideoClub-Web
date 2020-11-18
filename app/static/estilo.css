@@ -193,7 +193,7 @@ bodycontent {
 }
 
 /* Create four equal columns that sits next to each other */
-.column1, .column2, .column3, .column4 {
+.column1, .column2, .column3, .column4, .column {
   -ms-flex: 25%; /* IE10 */
   flex: 25%;
   max-width: 25%;
@@ -526,4 +526,10 @@ b {
   color:#8e8be0;
   font-size: 15px;
 
+}
+
+.topVentas {
+  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
 }

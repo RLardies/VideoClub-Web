@@ -53,6 +53,19 @@ def home():
         app.root_path, 'catalogue/catalogue.json'), encoding="utf-8").read()
     catalogue = json.loads(catalogue_data)
 
+    result =database.db_topventas()
+
+    top = {}
+    top['peliculas'] = []
+
+    if result != []:
+        for item in result:
+            movie = {}
+            movie['id'] = item[2]
+            movie['titulo'] = item[1]
+            movie['poster'] = ""
+            top['peliculas'].append(movie)
+
     # inicializamos algunas de las variables de session
     if 'num_items' not in session:
         session['num_items'] = 0
@@ -65,6 +78,7 @@ def home():
 
     return render_template('home.html',
                            title="Home",
+                           topventas = top['peliculas'],
                            movies=catalogue['peliculas'],
                            categories=getCategories())
 
@@ -179,7 +193,8 @@ def filmdescription():
 
     # obtenemos el id de la pelicula requerida y la buscamos en el catalogo
     movie_id = request.args.get('movie_id')
-    prodid = database.getprodid(movie_id)
+    prodid = database.db_getprodid(movie_id)
+    print("prodid")
 
     #for item in catalogue['peliculas']:
     #    if item['id'] == int(movie_id):
@@ -258,6 +273,8 @@ def category():
 def historial():
     # FALTA POR INTEGRAR EL HISTORIAL
     userid = session['userid']
+    historial = []
+    msg = None
 
     # Comprobamos que el usuario este loggeado
     if session['usuario'] is not None:
@@ -265,11 +282,25 @@ def historial():
         saldo = float(result[0][0])
         saldo = "{0:.2f}".format(saldo)
 
-        #result = database.db_gethistorial(userid)
+        result = database.db_gethistorial(userid)
+        if result != []:
+            for item in result:
+                movieid = database.db_getmovieid(item[0])
+                movie = filmdescriptionAux(movieid[0][0])
+                movie['cantidad'] = item[2]
+                movie['fecha'] = item[3]
+                historial.append(movie)
+        
+        else:
+            msg = "Aún no has realizado ninguna compra"
+
+        fechas = database.db_getfechas(userid)
 
         return render_template('historial.html',
                                     title='Historial de Compra',
-                                    msg="Aún no hay nada aquí",
+                                    msg=msg,
+                                    fechas = fechas,
+                                    historial = historial,
                                     categories=getCategories(), saldo=saldo)
 
     else:
@@ -345,8 +376,8 @@ def carrito():
 
     if result != False:
         for item in result:
-            result = database.db_getmovieid(item[0])
-            movie = filmdescriptionAux(result[0][0])
+            movieid = database.db_getmovieid(item[0])
+            movie = filmdescriptionAux(movieid[0][0])
             movie['cantidad'] = item[2]
             precio += movie['precio']*item[2]
             lista.append(movie)

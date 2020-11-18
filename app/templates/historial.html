@@ -16,9 +16,9 @@
     <table class="table">
      
       {% if msg == None %}
-      {% for pedido in historial.keys() %}
+      {% for pedido in fechas %}
         <tr class="despliegue"> 
-          <td class=dateorder colspan="4"> Pedido de {{pedido}} </td>
+          <td class=dateorder colspan="4"> Pedido de {{pedido[0]}} </td>
         </tr>
           <th>Portada</th>
           <th>Titulo</th>
@@ -26,7 +26,7 @@
           <th>Precio/unidad</th>
         </tr>
 
-        {% for item in historial[pedido] %}
+        {% for item in historial %}
           <tr>
             <td><img class="Img_carrito" src="{{item.poster}}" alt ="item.poster"></td>
             <td>{{item.titulo}}</td>

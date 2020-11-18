@@ -1,3 +1,4 @@
+drop function if exists getTopVentas(integer, integer);
 create or replace function getTopVentas(anoInicial integer, anoFinal integer)
     returns table(anoVenta integer, titulo varchar,id integer, totalVentas bigint) as $$
 
