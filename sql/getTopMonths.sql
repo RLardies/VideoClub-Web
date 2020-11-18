@@ -12,10 +12,10 @@ begin
                    
             group by anoVenta, monthVenta
             order by anoVenta, monthVenta) as monthVentas
-        where monthVentas.totalVentas >= 19000 or
-            monthVentas.totalGanancia >= 320000;
+        where monthVentas.totalVentas >= numProducts or
+            monthVentas.totalGanancia >= totalAmount;
 
 end;
 $$  language plpgsql;
 
-select getTopMonths(19000, 320000);
+select * from  getTopMonths(19000, 320000);
