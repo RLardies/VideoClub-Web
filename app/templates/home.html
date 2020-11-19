@@ -32,6 +32,7 @@
       var elemscolumn = 4;
       var colnum = 1;
       var i = 1;
+      cont = 1;
 
   
     </script>
@@ -40,7 +41,6 @@
 
   <a id='{{ item.id }}' href="{{url_for('filmdescription', movie_id=item.id) }}"></a>
     <script>
-
       if (i % (elemscolumn) != 0) {
         show({{ item.titulo|tojson }}, {{ item.poster|tojson }}, colnum, {{item.id }});
         i += 1;

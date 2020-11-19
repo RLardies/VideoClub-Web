@@ -92,7 +92,7 @@ def db_filmdescription(film):
         db_film += f"imdb_directors as d,imdb_directormovies as dm, imdb_moviecountries as ic, countries as c, products as p "
         db_film += f"where p.movieid = m.movieid and l.language_id = il.language and m.movieid = il.movieid and g.genre_id = ig.genre "
         db_film += f"and ig.movieid = m.movieid and d.directorid = dm.directorid and m.movieid = dm.movieid and ic.movieid = m.movieid " 
-        db_film += f"and ic.country = c.country_id and p.prod_id = '{film}'"
+        db_film += f"and ic.country = c.country_id and m.movieid = '{film}'"
         
         db_result = db_conn.execute(db_film)
         db_conn.close()

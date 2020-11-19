@@ -3,322 +3,166 @@
     { 
 			"id": 147,
 			"titulo": "'Crocodile' Dundee II (1988)",
-      "poster": "static/images/baby-driver.jpg",
-      "director": "George Lucas",
-      "precio": 18.99,
-      "categoria": "Accion",
-      "año": 1999,
-      "actores": 
-      [
-        { "nombre": "Jake Lloyd",
-          "personaje": "Anakin Skywalker",
-          "foto": "imagenes/anakin.jpg"
-        }
-      ]
+      "poster": "static/images/crocodiledundee2.jpg",
+      "categoria": "Accion"
     },
     { 
       "id": 103,
       "titulo": "'Breaker' Morant (1980)",
-      "poster": "static/images/moonlight.jpg",
-      "director": "George Lucas",
-      "precio": 18.99,
-      "categoria": "Drama",
-      "año": 1999,
-      "actores": 
-      [
-        { "nombre": "Jake Lloyd",
-          "personaje": "Anakin Skywalker",
-          "foto": "imagenes/anakin.jpg"
-        }
-      ]
+      "poster": "static/images/breakermorant.jpg",
+      "categoria": "Drama"
     },
     { 
       "id": 992,
-      "titulo": "Avatar",
-      "poster": "static/images/avatar.jpg",
-      "director": "George Lucas",
-      "precio": 18.99,
-      "categoria": "Ciencia Ficcion",
-      "año": 1999,
-      "actores": 
-      [
-        { "nombre": "Jake Lloyd",
-          "personaje": "Anakin Skywalker",
-          "foto": "imagenes/anakin.jpg"
-        }
-      ]
+      "titulo": "10 Things I Hate About You (1999)",
+      "poster": "static/images/10things.jpg",
+      "categoria": "Romance"
     },
     { 
       "id": 88511,
       "titulo": "Crocodile Dundee (1986)",
-      "poster": "static/images/fight-club.jpg",
-      "director": "George Lucas",
-      "precio": 18.99,
-      "categoria": "Drama",
-      "año": 1999,
-      "actores": 
-      [
-        { "nombre": "Jake Lloyd",
-          "personaje": "Anakin Skywalker",
-          "foto": "imagenes/anakin.jpg"
-        }
-      ]
+      "poster": "static/images/crocodiledundee.jpg",
+      "categoria": "Aventura"
     },
     { 
       "id": 95970,
       "titulo": "Davy Crockett, King of the Wild Frontier (1954)",
-      "poster": "static/images/harry-potter.jpg",
-      "director": "George Lucas",
-      "precio": 18.99,
-      "categoria": "Ciencia Ficcion",
-      "año": 1999,
-      "actores": 
-      [
-        { "nombre": "Jake Lloyd",
-          "personaje": "Anakin Skywalker",
-          "foto": "imagenes/anakin.jpg"
-        }
-      ]
+      "poster": "static/images/davycrockett.jpg",
+      "categoria": "Aventura"
     },
     { 
       "id": 257245,
       "titulo": "Microcosmos: Le peuple de l'herbe (1996)",
-      "poster": "static/images/angeles-y-demonios.jpg",
-      "director": "George Lucas",
-      "precio": 18.99,
-      "categoria": "Aventura",
-      "año": 1999,
-      "actores": 
-      [
-        { "nombre": "Jake Lloyd",
-          "personaje": "Anakin Skywalker",
-          "foto": "imagenes/anakin.jpg"
-        }
-      ]
+      "poster": "static/images/microcosmos.jpg",
+      "categoria": "Documentary"
     },
     { 
       "id": 442327,
       "titulo": "Wisdom of Crocodiles, The (1998)",
-      "poster": "static/images/passengers.jpg",
-      "director": "George Lucas",
-      "precio": 18.99,
-      "categoria": "Drama",
-      "año": 1999,
-      "actores": 
-      [
-        { "nombre": "Jake Lloyd",
-          "personaje": "Anakin Skywalker",
-          "foto": "imagenes/anakin.jpg"
-        }
-      ]
+      "poster": "static/images/wisdomcrocodiles.jpg",
+      "categoria": "Romance"
     },
     { 
-      "id": 8,
-      "titulo": "Cisne negro",
-      "poster": "static/images/cisne-negro.jpg",
-      "director": "George Lucas",
-      "precio": 18.99,
-      "categoria": "Drama",
-      "año": 1999,
-      "actores": 
-      [
-        { "nombre": "Jake Lloyd",
-          "personaje": "Anakin Skywalker",
-          "foto": "imagenes/anakin.jpg"
-        }
-      ]
+      "id": 7960,
+      "titulo": "Addicted to Love (1997)",
+      "poster": "static/images/addictedtolove.jpg",
+      "categoria": "Romance"
     },
     { 
-      "id": 9,
-      "titulo": "Baby driver",
-      "poster": "static/images/baby-driver.jpg",
-      "director": "George Lucas",
-      "precio": 18.99,
-      "categoria": "Ciencia Ficcion",
-      "año": 1999,
-      "actores": 
-      [
-        { "nombre": "Jake Lloyd",
-          "personaje": "Anakin Skywalker",
-          "foto": "imagenes/anakin.jpg"
-        }
-      ]
+      "id": 42391,
+      "titulo":"Best Years of Our Lives, The (1946)",
+      "poster": "static/images/bestyears.jpg",
+      "categoria": "Drama"
     },
      { 
-      "id": 10,
-      "titulo": "Malefica",
-      "poster": "static/images/malefica.jpg",
-      "director": "George Lucas",
-      "precio": 18.99,
-      "categoria": "Ciencia Ficcion",
-      "año": 1999,
-      "actores": 
-      [
-        { "nombre": "Jake Lloyd",
-          "personaje": "Anakin Skywalker",
-          "foto": "imagenes/anakin.jpg"
-        }
-      ]
+      "id": 111155,
+      "titulo": "Down to You (2000)",
+      "poster": "static/images/downtoyou.jpg",
+      "categoria": "Romance"
     },
      { 
-      "id": 11,
-      "titulo": "Avengers",
-      "poster": "static/images/avengers.jpg",
-      "director": "George Lucas",
-      "precio": 18.99,
-      "categoria": "Ciencia Ficcion",
-      "año": 1999,
-      "actores": 
-      [
-        { "nombre": "Jake Lloyd",
-          "personaje": "Anakin Skywalker",
-          "foto": "imagenes/anakin.jpg"
-        }
-      ]
+      "id": "137053",
+      "titulo": "Finding North (1998)",
+      "poster": "static/images/findingnorth.jpg",
+      "categoria": "Drama"
     },
      { 
       "id": 336,
       "titulo": "'Night, Mother (1986)",
-      "poster": "static/images/avengers.jpg",
-      "director": "George Lucas",
-      "precio": 18.99,
-      "categoria": "Drama",
-      "año": 1999,
-      "actores": 
-      [
-        { "nombre": "Jake Lloyd",
-          "personaje": "Anakin Skywalker",
-          "foto": "imagenes/anakin.jpg"
-        }
-      ]
-    },
-     { 
-      "id": 9578,
-      "titulo": "African Queen, The (1951)",
-      "poster": "static/images/avengers.jpg",
-      "director": "George Lucas",
-      "precio": 18.99,
-      "categoria": "Drama",
-      "año": 1999,
-      "actores": 
-      [
-        { "nombre": "Jake Lloyd",
-          "personaje": "Anakin Skywalker",
-          "foto": "imagenes/anakin.jpg"
-        }
-      ]
+      "poster": "static/images/nightmother.jpg",
+      "categoria": "Drama"
     },
      { 
       "id": 1575,
       "titulo": "13th Warrior, The (1999)",
-      "poster": "static/images/avengers.jpg",
-      "director": "George Lucas",
-      "precio": 18.99,
-      "categoria": "Accion",
-      "año": 1999,
-      "actores": 
-      [
-        { "nombre": "Jake Lloyd",
-          "personaje": "Anakin Skywalker",
-          "foto": "imagenes/anakin.jpg"
-        }
-      ]
+      "poster": "static/images/13warrior.jpg",
+      "categoria": "Accion"
     },
      { 
       "id": 3102,
       "titulo": "3 Ninjas: High Noon at Mega Mountain (1998)",
-      "poster": "static/images/avengers.jpg",
-      "director": "George Lucas",
-      "precio": 18.99,
-      "categoria": "Accion",
-      "año": 1999,
-      "actores": 
-      [
-        { "nombre": "Jake Lloyd",
-          "personaje": "Anakin Skywalker",
-          "foto": "imagenes/anakin.jpg"
-        }
-      ]
+      "poster": "static/images/3ninjas.jpg",
+      "categoria": "Accion"
     },
      { 
       "id": 2475,
       "titulo": "2001: A Space Odyssey (1968)",
-      "poster": "static/images/avengers.jpg",
-      "director": "George Lucas",
-      "precio": 18.99,
-      "categoria": "Ciencia Ficcion",
-      "año": 1999,
-      "actores": 
-      [
-        { "nombre": "Jake Lloyd",
-          "personaje": "Anakin Skywalker",
-          "foto": "imagenes/anakin.jpg"
-        }
-      ]
+      "poster": "static/images/a_espace_odyssey.jpg",
+      "categoria": "Ciencia Ficcion"
+
     },
      { 
       "id": 2576,
       "titulo": "2010 (1984)",
-      "poster": "static/images/avengers.jpg",
-      "director": "George Lucas",
-      "precio": 18.99,
-      "categoria": "Ciencia Ficcion",
-      "año": 1999,
-      "actores": 
-      [
-        { "nombre": "Jake Lloyd",
-          "personaje": "Anakin Skywalker",
-          "foto": "imagenes/anakin.jpg"
-        }
-      ]
+      "poster": "static/images/2010.jpg",
+      "categoria": "Ciencia Ficcion"
+      
     },
      { 
       "id": 6364,
       "titulo": "Abominable Snowman, The (1957)",
-      "poster": "static/images/avengers.jpg",
-      "director": "George Lucas",
-      "precio": 18.99,
-      "categoria": "Ciencia Ficcion",
-      "año": 1999,
-      "actores": 
-      [
-        { "nombre": "Jake Lloyd",
-          "personaje": "Anakin Skywalker",
-          "foto": "imagenes/anakin.jpg"
-        }
-      ]
+      "poster": "static/images/abominable.jpg",
+      "categoria": "Ciencia Ficcion"
     },
      { 
       "id": 9578,
       "titulo": "African Queen, The (1951)",
-      "poster": "static/images/avengers.jpg",
-      "director": "George Lucas",
-      "precio": 18.99,
-      "categoria": "Aventura",
-      "año": 1999,
-      "actores": 
-      [
-        { "nombre": "Jake Lloyd",
-          "personaje": "Anakin Skywalker",
-          "foto": "imagenes/anakin.jpg"
-        }
-      ]
+      "poster": "static/images/african_queen.jpg",
+      "categoria": "Aventura"
     },
      { 
       "id": 1257,
       "titulo": "101 Dalmatians (1996)",
-      "poster": "static/images/avengers.jpg",
-      "director": "George Lucas",
-      "precio": 18.99,
-      "categoria": "Aventura",
-      "año": 1999,
-      "actores": 
-      [
-        { "nombre": "Jake Lloyd",
-          "personaje": "Anakin Skywalker",
-          "foto": "imagenes/anakin.jpg"
-        }
-      ]
+      "poster": "static/images/101dalmatians.jpg",
+      "categoria": "Aventura"
+    },
+    { 
+      "id": 470,
+      "titulo": "'Til There Was You (1997)",
+      "poster": "static/images/tiltherewasyou.jpg",
+      "categoria": "Aventura"
+    },
+    { 
+      "id": 3651,
+      "titulo": "42: Forty Two Up (1998)",
+      "poster": "static/images/42up.jpg",
+      "categoria": "Aventura"
+    },
+    { 
+      "id": 17016,
+      "titulo": "American Dream (1991)",
+      "poster": "static/images/americandream.jpg",
+      "categoria": "Aventura"
+    },
+    { 
+      "id": 17216,
+      "titulo": "American Movie (1999)",
+      "poster": "static/images/americanmovie.jpg",
+      "categoria": "Aventura"
+    },
+    { 
+      "id": 442893,
+      "titulo": "Wizard of Oz, The (1939)",
+      "poster": "static/images/wizardofoz.jpg",
+      "categoria": "Aventura"
+    },
+    { 
+      "id": 229764,
+      "titulo": "Life Less Ordinary, A (1997)",
+      "poster": "static/images/alifelessordinary.jpg",
+      "categoria": "Aventura"
+    },
+    { 
+      "id": 149475,
+      "titulo": "Gang Related (1997)",
+      "poster": "static/images/gangrelated.jpg",
+      "categoria": "Aventura"
+    },
+    { 
+      "id": 11294,
+      "titulo": "Airheads (1994)",
+      "poster": "static/images/airheads.jpg",
+      "categoria": "Aventura"
     }
 
   ]

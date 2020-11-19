@@ -7,12 +7,7 @@
 --en cualquier caso, incluso vacias
 begin;
 lock table orders in exclusive mode;
-select setval('orders_orderid_seq', coalesce((select max(orderid) + 1 from orders), 1), false);
-commit;
-
-begin;
-lock table customers in exclusive mode;
-select setval('customers_customerid_seq', coalesce((select max(customerid) + 1 from customers), 1), false);
+select setval('orders_orderid_seq', coalesce((select max(orderid) from orders), 1), false);
 commit;
 
 --borramos las columnas de usuario que no utilizamos en nuestra base de datos (al registrarse no se le piden esos datos)
@@ -193,7 +188,7 @@ alter table products alter column  prod_id set default nextval('products_prod_id
 
 begin;
 lock table products in exclusive mode;
-select setval('products_prod_id_seq', coalesce((select max(prod_id) + 1 from products), 1), false);
+select setval('products_prod_id_seq', coalesce((select max(prod_id) from products), 1), false);
 commit;
 
 --añadimos las foreign key que dependian de products

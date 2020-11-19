@@ -64,6 +64,9 @@ def home():
             movie['id'] = item[2]
             movie['titulo'] = item[1]
             movie['poster'] = ""
+            for item2 in catalogue['peliculas']:
+                if item2['id'] == movie['id']:
+                    movie['poster'] = item2['poster']
             top['peliculas'].append(movie)
 
     # inicializamos algunas de las variables de session
@@ -165,9 +168,11 @@ def signup():
 
 def filmdescriptionAux(movieid):
 
+    catalogue_data = open(os.path.join(
+    app.root_path, 'catalogue/catalogue.json'), encoding="utf-8").read()
+    catalogue = json.loads(catalogue_data)
+
     result = database.db_filmdescription(movieid)
-    print("RESULTADO")
-    print(result)
 
     if result != False:
         item = {}
@@ -179,6 +184,12 @@ def filmdescriptionAux(movieid):
         item['año'] = result[0][1]
         item['pais'] = result[0][6]
         item['idioma'] = result[0][4]
+        item['poster'] = ""
+
+        for item2 in catalogue['peliculas']:
+            if int(movieid) == item2['id']:
+                print("HOLAAAAA")
+                item['poster'] = item2['poster']
 
         return item
     else:
@@ -187,20 +198,12 @@ def filmdescriptionAux(movieid):
 @app.route('/filmdescription', methods=['GET', 'POST'])
 def filmdescription():
 
-    #catalogue_data = open(os.path.join(
-    #    app.root_path, 'catalogue/catalogue.json'), encoding="utf-8").read()
-    #catalogue = json.loads(catalogue_data)
 
     # obtenemos el id de la pelicula requerida y la buscamos en el catalogo
     movie_id = request.args.get('movie_id')
-    prodid = database.db_getprodid(movie_id)
-    print("prodid")
+    #prodid = database.db_getprodid(movie_id)
 
-    #for item in catalogue['peliculas']:
-    #    if item['id'] == int(movie_id):
-    #        break
- 
-    item = filmdescriptionAux(prodid[0][0])
+    item = filmdescriptionAux(movie_id)
 
     if item is None:
         return render_template('home.html',
@@ -249,6 +252,9 @@ def category():
             movie['id'] = item[0]
             movie['titulo'] = item[1]
             movie['poster'] = ""
+            for item2 in catalogue['peliculas']:
+                if item2['id'] == movie['id']:
+                    movie['poster'] = item2['poster']
             movies.append(movie)
 
     
