@@ -7,7 +7,7 @@
 --en cualquier caso, incluso vacias
 begin;
 lock table orders in exclusive mode;
-select setval('orders_orderid_seq', coalesce((select max(orderid) from orders), 1), false);
+select setval('orders_orderid_seq', coalesce((select max(orderid)+1 from orders), 1), false);
 commit;
 
 --borramos las columnas de usuario que no utilizamos en nuestra base de datos (al registrarse no se le piden esos datos)
@@ -28,6 +28,11 @@ alter table customers add saldo numeric default 0;
 
 --no se si el email es obligatorio al registrarse, por si lo es
 alter table customers alter column email set NOT NULL;
+
+begin;
+lock table customers in exclusive mode;
+select setval('customers_customerid_seq', coalesce((select max(customerid) + 1 from customers), 1), false);
+commit;
 
 --eliminamos también los atributos no necesarios de otras tablas
 

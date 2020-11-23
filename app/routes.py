@@ -173,7 +173,7 @@ def filmdescriptionAux(movieid):
     catalogue = json.loads(catalogue_data)
 
     result = database.db_filmdescription(movieid)
-
+   
     if result != False:
         item = {}
         item['id'] = movieid
@@ -188,7 +188,6 @@ def filmdescriptionAux(movieid):
 
         for item2 in catalogue['peliculas']:
             if int(movieid) == item2['id']:
-                print("HOLAAAAA")
                 item['poster'] = item2['poster']
 
         return item
@@ -400,7 +399,7 @@ def carrito():
 def eliminar(movie_id):
     userid = session['userid']
 
-    result = database.db_eliminar(userid, movie_id)
+    database.db_eliminar(userid, movie_id)
     if session['num_items'] > 0:
         session['num_items'] -= 1
     session.modified = True
@@ -412,7 +411,7 @@ def eliminar(movie_id):
 def añadir(movie_id):
     userid = session['userid']
 
-    result = database.db_añadir(userid, movie_id)
+    database.db_añadir(userid, movie_id)
     session['num_items'] += 1
     session.modified = True
 
@@ -428,7 +427,6 @@ def realizar_pedido():
         result = database.db_finpedido(userid)
         result2= database.db_obtenerSaldo(userid)
         saldo = result2[0][0]
-        print(saldo)
 
         # Si el precio es mayor que el saldo mostramnos mensaje de error
         if float(saldo) < float(session['precio']):

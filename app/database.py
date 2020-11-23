@@ -257,7 +257,7 @@ def db_comprar(userid, movieid):
             db_result5 = db_conn.execute(db_insert2)
 
         else:
-            db_update = f"update orderdetail set quantity = quantity + 1 where prod_id = {movieid} and orderid = {result3[0][0]}"
+            db_update = f"update orderdetail set quantity = quantity + 1 where prod_id = {prodid[0][0]} and orderid = {result3[0][0]}"
             db_result5 = db_conn.execute(db_update)
 
         db_conn.close()
@@ -328,10 +328,13 @@ def db_getproductos(userid):
         db_conn = None
         db_conn = db_engine.connect()
 
-        db_getprods = f"select prod_id, orders.orderid, quantity from orders natural join orderdetail"
+        db_getprods = f"select movieid, orders.orderid, quantity from orders natural join orderdetail natural join products"
         db_getprods += f" where status is null and customerid = {userid}"
-        
+
         db_result = db_conn.execute(db_getprods)
+
+        db_obtener_movieid = db_getmovieid()
+        
         db_conn.close()
 
         return list(db_result)
@@ -464,7 +467,6 @@ def db_eliminar(userid, movie_id):
         db_result = db_conn.execute(db_comprobar)
 
         quantity = list(db_result)
-        print(quantity)
 
         if quantity[0][0] <= 0:
             db_sacarfila = f"delete from orderdetail where prod_id = {prodid[0][0]} and orderid = {orders[0][0]}"
@@ -480,7 +482,7 @@ def db_eliminar(userid, movie_id):
 
         db_conn.close()
 
-        return list(db_result)
+        return
 
     except:
         if db_conn is not None:
@@ -516,7 +518,7 @@ def db_añadir(userid, movie_id):
 
         db_conn.close()
 
-        return list(db_result)
+        return 
 
     except:
         if db_conn is not None:

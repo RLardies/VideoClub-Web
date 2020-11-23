@@ -23,4 +23,4 @@ end;
 $$  language plpgsql;
 
 
-select * from getTopVentas(2016, 2018);
+select * from getTopVentas(2016, 2020);
