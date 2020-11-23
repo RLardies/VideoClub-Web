@@ -428,27 +428,37 @@ def realizar_pedido():
         result2= database.db_obtenerSaldo(userid)
         saldo = result2[0][0]
 
+        pedido = database.db_getproductos(userid)
+
+        lista = []
+            
+        for item in pedido:
+            movie = filmdescriptionAux(item[0])
+            movie['cantidad'] = item[2]
+            lista.append(movie)
+
         # Si el precio es mayor que el saldo mostramnos mensaje de error
         if float(saldo) < float(session['precio']):
-
-            lista = []
-
-            pedido = database.db_getproductos(userid)
-
-            for item in pedido:
-                movie = filmdescriptionAux(item[0])
-                movie['cantidad'] = item[2]
-                lista.append(movie)
 
             msg = "Saldo insuficiente"
             return render_template('carrito.html', title="Carrito",
                                    lista_carrito=lista,
                                    precio="{0:.2f}".format(session['precio']),
                                    categories=getCategories(), msg=msg)
-        
+            
         else:
-            result3 = database.db_setstatus(result[0][0])
-            result4 = database.db_setsaldo(userid, session['precio'])
+            for item in pedido:
+                movie = filmdescriptionAux(item[0])
+                prodid = database.db_getprodid(item[0])
+                if database.db_getstock(prodid) < item[2]:
+                    msg = "No hay stock de la pelicula " + movie['titulo']
+                    return render_template('carrito.html', title="Carrito",
+                                   lista_carrito=lista,
+                                   precio="{0:.2f}".format(session['precio']),
+                                   categories=getCategories(), msg=msg)
+
+            database.db_setstatus(result[0][0])
+            database.db_setsaldo(userid, session['precio'])
             session['num_items'] = 0
             session.modified=True
 

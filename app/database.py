@@ -228,7 +228,6 @@ def db_comprar(userid, movieid):
 
         result2 = list(db_result2)
 
-        #falta comprobar si hay stock
         if result == []:
             db_insert = f"insert into orders (orderdate, customerid, tax) values (current_date, {userid}, 15)"
             db_result3 = db_conn.execute(db_insert)
@@ -332,8 +331,6 @@ def db_getproductos(userid):
         db_getprods += f" where status is null and customerid = {userid}"
 
         db_result = db_conn.execute(db_getprods)
-
-        db_obtener_movieid = db_getmovieid()
         
         db_conn.close()
 
@@ -361,7 +358,7 @@ def db_setstatus(orderid):
         db_result = db_conn.execute(db_setStatus)
         db_conn.close()
 
-        return list(db_result)
+        return
 
     except:
         if db_conn is not None:
@@ -384,7 +381,7 @@ def db_setsaldo(userid, precio):
         db_result = db_conn.execute(db_setsaldo)
         db_conn.close()
 
-        return list(db_result)
+        return
 
     except:
         if db_conn is not None:
@@ -514,8 +511,6 @@ def db_añadir(userid, movie_id):
         db_setquantity = f"update orderdetail set quantity = quantity + 1 where prod_id = {prodid[0][0]} and orderid = {orders[0][0]}"
         db_result = db_conn.execute(db_setquantity)
 
-        #faltaria por comprobar si hay stock para añadirla ??
-
         db_conn.close()
 
         return 
@@ -591,6 +586,30 @@ def db_topventas():
         db_conn.close()
 
         return list(db_result)
+
+    except:
+        if db_conn is not None:
+            db_conn.close()
+        print("Exception in DB access:")
+        print("-"*60)
+        traceback.print_exc(file=sys.stderr)
+        print("-"*60)
+
+        return False
+
+def db_getstock(prodid):
+    try:
+        # conexion a la base de datos
+        db_conn = None
+        db_conn = db_engine.connect()
+
+        db_getstock = f"select stock from products where prod_id = {prodid}"
+        
+        db_result = db_conn.execute(db_getstock)
+        db_conn.close()
+
+        stock = list(db_result)
+        return stock[0][0]
 
     except:
         if db_conn is not None:
