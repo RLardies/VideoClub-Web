@@ -207,3 +207,6 @@ create table no_stock (
     orderdate date,
     foreign key (prod_id) references products(prod_id)
 );
+
+alter table orders alter column netamount type numeric(10,2);
+alter table orders alter column totalamount type numeric(10,2);
