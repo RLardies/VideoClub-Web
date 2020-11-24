@@ -163,7 +163,26 @@
       "titulo": "Illtown (1996)",
       "poster": "static/images/illtown.jpg",
       "categoria": "Aventura"
+    },
+    { 
+      "id": 229931,
+      "titulo": "Life with Mikey (1993)",
+      "poster": "static/images/lifewithmikey.jpg",
+      "categoria": "Comedy"
+    },
+    { 
+      "id": 9772,
+      "titulo": "After Life (2005)",
+      "poster": "static/images/afterlife.jpg",
+      "categoria": "Comedy"
+    },
+    { 
+      "id": 9926,
+      "titulo": "Afterglow (1997)",
+      "poster": "static/images/afterglow.jpg",
+      "categoria": "Comedy"
     }
+
 
   ]
 }

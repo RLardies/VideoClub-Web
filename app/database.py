@@ -620,3 +620,32 @@ def db_getstock(prodid):
         print("-"*60)
 
         return False
+
+def db_getnumitems(userid):
+    try:
+        # conexion a la base de datos
+        db_conn = None
+        db_conn = db_engine.connect()
+
+        db_getnumitems = f"select sum(quantity) from orderdetail, orders"
+        db_getnumitems += f" where orders.orderid = orderdetail.orderid and orders.status is null"
+        db_getnumitems += f" and orders.customerid = {userid}"
+        
+        db_result = db_conn.execute(db_getnumitems)
+        db_conn.close()
+
+        items = list(db_result)
+        if items[0][0] == None:
+            return 0
+
+        return items[0][0]
+
+    except:
+        if db_conn is not None:
+            db_conn.close()
+        print("Exception in DB access:")
+        print("-"*60)
+        traceback.print_exc(file=sys.stderr)
+        print("-"*60)
+
+        return False

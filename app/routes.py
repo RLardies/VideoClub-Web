@@ -101,6 +101,7 @@ def login():
             response = make_response(redirect(url_for('home')))
             response.set_cookie('usuario', request.form['username'])
             session['usuario'] = request.form['username']
+            session['num_items'] = database.db_getnumitems(result[0][0])
             session.modified = True
 
             return response
@@ -167,7 +168,7 @@ def signup():
        return render_template('signup.html', title="Sign Up", )
 
 def filmdescriptionAux(movieid):
-
+    
     catalogue_data = open(os.path.join(
     app.root_path, 'catalogue/catalogue.json'), encoding="utf-8").read()
     catalogue = json.loads(catalogue_data)
@@ -255,13 +256,6 @@ def category():
                 if item2['id'] == movie['id']:
                     movie['poster'] = item2['poster']
             movies.append(movie)
-
-    
-
-    # Añadimos las peliculas de esa categoria
-    #for movie in catalogue['peliculas']:
-    #    if movie['categoria'] == cat:
-    #        movies.append(movie)
 
         return render_template('category.html',
                            title=cat,
@@ -450,7 +444,8 @@ def realizar_pedido():
             for item in pedido:
                 movie = filmdescriptionAux(item[0])
                 prodid = database.db_getprodid(item[0])
-                if database.db_getstock(prodid) < item[2]:
+                stock = database.db_getstock(prodid[0][0])
+                if stock < item[2]:
                     msg = "No hay stock de la pelicula " + movie['titulo']
                     return render_template('carrito.html', title="Carrito",
                                    lista_carrito=lista,
