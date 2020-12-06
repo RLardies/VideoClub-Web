@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+<body>
+
+<div class="content">
+    <h2 class="subtitulos">{{ title }}</h2>
+
+    <table class="tables">
+        <tr>
+            <th>Primera Tabla</th>
+        <tr>
+            <th class="titleTable">Título</th>
+            <th class="titleTable">Año</th>
+        </tr>
+
+        {% for item in firstTable %}
+        <tr>
+            <td>{{item.title}}</td>
+            <td>{{item.year}}</td>
+        </tr>
+        {% endfor %}
+
+        <tr>
+            <th>Segunda Tabla</td>
+        <tr>
+
+        {% for item in secondTable %}
+        <tr>
+            <td>{{item.title}}</td>
+            <td>{{item.year}}</td>
+        </tr>
+        {% endfor %}
+
+        <tr>
+            <th>Tercera Tabla</td>
+        <tr>
+
+        {% for item in thirdTable %}
+        <tr>
+            <td>{{item.title}}</td>
+            <td>{{item.year}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+</div>
+
+</body>
+</html>
+
+{% endblock %}

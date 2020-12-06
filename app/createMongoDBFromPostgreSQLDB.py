@@ -8,9 +8,9 @@ from sqlalchemy import Table, Column, Integer, String, MetaData, ForeignKey, tex
 from sqlalchemy.sql import select
 
 myclient = pymongo.MongoClient("mongodb://localhost:27017/")
-mydb = myclient["mongoDB"]
+mydb = myclient["si1"]
 
-mycol = mydb["movies"]
+mycol = mydb["topUSA"]
 
 db_engine = create_engine("postgresql://alumnodb:alumnodb@localhost/si1", echo=False)
 db_meta = MetaData(bind=db_engine)
@@ -82,6 +82,8 @@ try:
         for actor in actor_list:
             L.append(actor[0])
 
+        movie["actors"] = L
+
         Lmost_related = []
         i = 0
         for i in range(0, len(genres_list)):
@@ -100,10 +102,39 @@ try:
 
                     Lmost_related.append(relacionada)
             
-            if len(Lmost_related) > 10:
-                movie['most_related_movies'] = Lmost_related[:10]
-            else:
-                movie['most_related_movies'] = Lmost_related
+        if len(Lmost_related) > 10:
+            movie['most_related_movies'] = Lmost_related[:10]
+        else:
+            movie['most_related_movies'] = Lmost_related
+
+        Lrelated = []
+
+        for i in range(0, len(genres_list)):
+            genres_list[i].sort()
+            movie['genres'].sort()
+
+            count_genres = 0
+            for genre in genres_list[i]:
+                if genre in movie['genres']:
+                    count_genres += 1
+
+            if count_genres > (len(movie['genres']) // 2) and len(movie['genres']) > 1 and i != id_movie:
+                relacionada = {}
+                db_title = f"select movietitle, year from imdb_movies where movieid = {movies[i][0]}"
+                db_result = db_conn.execute(db_title)
+                result = list(db_result)
+
+                relacionada['title'] = result[0][0]
+                relacionada['year'] = result[0][1]
+
+                if relacionada not in Lmost_related:
+                    Lrelated.append(relacionada)
+
+        if len(Lrelated) > 10:
+            movie['related_movies'] = Lrelated[:10]
+        else:
+            movie['related_movies'] = Lrelated
+
 
         mycol.insert_one(movie)
         id_movie += 1

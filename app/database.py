@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-
+import pymongo
+from pymongo import MongoClient
 import os
 import sys, traceback
 from sqlalchemy import create_engine
@@ -7,8 +8,11 @@ from sqlalchemy import Table, Column, Integer, String, MetaData, ForeignKey, tex
 from sqlalchemy.sql import select
 
 # configurar el motor de sqlalchemy
-db_engine = create_engine("postgresql://alumnodb:alumnodb@localhost/si1", echo=False)
+db_engine = create_engine("postgresql://alumnodb:alumnodb@localhost/si1bis", echo=False)
 db_meta = MetaData(bind=db_engine)
+
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+db_mongo = myclient["si1"]
 
 #registra el usuario en nuestra base de datos
 def db_register(data):
@@ -649,3 +653,66 @@ def db_getnumitems(userid):
         print("-"*60)
 
         return False
+
+
+def db_topUSAfirstTable():
+
+
+    col = db_mongo["topUSA"]
+    query = { "year" : "1997", "title" : { "$regex" : "(?i).*?\\blife.*?\\b"}, 'genres':{ "$in": ["Comedy"]}}
+    topUSA = col.find(query)
+
+    top = []
+
+    for movie in topUSA:
+
+        peli = {}
+
+        peli["title"] = movie["title"]
+        peli["year"] = movie["year"]
+        top.append(peli)
+
+    return top
+
+def db_topUSAsecondTable():
+
+    col = db_mongo["topUSA"]
+    query = {  "year" : { "$gte" : "1990"}, "year" : {"$lte": "1999"},'directors':{ "$in": ["Allen, Woody"]}}
+    topUSA = col.find(query)
+
+    top = []
+    for movie in topUSA:
+
+        peli = {}
+
+        peli["title"] = movie["title"]
+        peli["year"] = movie["year"]
+        peli["directores"] = movie["directors"]
+
+        top.append(peli)
+
+    return top
+
+def db_topUSAthirdTable():
+
+    col = db_mongo["topUSA"]
+    query = { 'actors':{ "$in": ["Parsons, Jim"]}, 'actors':{ "$in": ["Parsons, Jim"]}}
+    topUSA = col.find(query)
+
+    top = []
+    for movie in topUSA:
+
+        peli = {}
+
+        peli["title"] = movie["title"]
+        peli["year"] = movie["year"]
+        peli["actors"] = movie["actors"]
+
+        top.append(peli)
+
+    return top
+
+
+
+
+    

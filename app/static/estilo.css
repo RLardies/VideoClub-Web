@@ -509,7 +509,17 @@ table {
   width: 100%;
 }
 
-td {
+.titleTable {
+  text-align: left;
+}
+
+.tables {
+  text-align: left;
+  align-items: left;
+  width: 100%;
+}
+
+th {
   text-align: center;
 }
 

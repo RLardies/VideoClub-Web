@@ -471,3 +471,14 @@ def connected_user():
     num_users = randint(100, 1000)
 
     return "Usuarios Conectados: " + str(num_users)
+
+@app.route('/topUSA', methods=['GET', 'POST'])
+def topUSA():
+
+    firstTable = database.db_topUSAfirstTable()
+
+    secondTable = database.db_topUSAsecondTable()
+    thirdTable = database.db_topUSAthirdTable()
+
+    return render_template('topUSA.html', title="Top USA", 
+                        firstTable=firstTable, secondTable=secondTable, thirdTable=thirdTable)
