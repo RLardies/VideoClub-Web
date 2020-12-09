@@ -696,7 +696,7 @@ def db_topUSAsecondTable():
 def db_topUSAthirdTable():
 
     col = db_mongo["topUSA"]
-    query = { 'actors':{ "$in": ["Parsons, Jim"]}, 'actors':{ "$in": ["Parsons, Jim"]}}
+    query = {"actors": {"$all": ["Galecki, Johnny", "Parsons, Jim (II)"]}}
     topUSA = col.find(query)
 
     top = []
