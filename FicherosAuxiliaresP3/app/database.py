@@ -145,12 +145,12 @@ def delCustomer(customerid, bFallo, bSQL, duerme, bCommit):
             sql = sqlalchemy.text(query1)
             db_conn.execute(sql)
             dbr.append("Borramos datos del cliente de Orderdetail")
-            
-            time.sleep(duerme)
-            
+
             sql = sqlalchemy.text(query2)
             db_conn.execute(sql)
             dbr.append("Borramos datos del cliente de Orders")
+
+            time.sleep(duerme)
 
             sql = sqlalchemy.text(query3)
             db_conn.execute(sql)
