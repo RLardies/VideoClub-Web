@@ -1,5 +1,5 @@
 
-alter table customers add column promo integer default 10;
+alter table customers add column promo integer default 0;
 alter table orders alter column netamount type numeric(10,2);
 alter table orders alter column totalamount type numeric(10,2);
 
