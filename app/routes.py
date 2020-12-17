@@ -53,22 +53,6 @@ def home():
         app.root_path, 'catalogue/catalogue.json'), encoding="utf-8").read()
     catalogue = json.loads(catalogue_data)
 
-    result =database.db_topventas()
-
-    top = {}
-    top['peliculas'] = []
-
-    if result != []:
-        for item in result:
-            movie = {}
-            movie['id'] = item[2]
-            movie['titulo'] = item[1]
-            movie['poster'] = ""
-            for item2 in catalogue['peliculas']:
-                if item2['id'] == movie['id']:
-                    movie['poster'] = item2['poster']
-            top['peliculas'].append(movie)
-
     # inicializamos algunas de las variables de session
     if 'num_items' not in session:
         session['num_items'] = 0
@@ -81,7 +65,6 @@ def home():
 
     return render_template('home.html',
                            title="Home",
-                           topventas = top['peliculas'],
                            movies=catalogue['peliculas'],
                            categories=getCategories())
 
@@ -481,4 +464,4 @@ def topUSA():
     thirdTable = database.db_topUSAthirdTable()
 
     return render_template('topUSA.html', title="Top USA", 
-                        firstTable=firstTable, secondTable=secondTable, thirdTable=thirdTable)
+                        firstTable=firstTable, secondTable=secondTable, thirdTable=thirdTable, categories=getCategories())

@@ -8,7 +8,7 @@ from sqlalchemy import Table, Column, Integer, String, MetaData, ForeignKey, tex
 from sqlalchemy.sql import select
 
 # configurar el motor de sqlalchemy
-db_engine = create_engine("postgresql://alumnodb:alumnodb@localhost/si1bis", echo=False)
+db_engine = create_engine("postgresql://alumnodb:alumnodb@localhost/si1", echo=False)
 db_meta = MetaData(bind=db_engine)
 
 myclient = pymongo.MongoClient("mongodb://localhost:27017/")
@@ -91,12 +91,12 @@ def db_filmdescription(film):
         db_conn = None
         db_conn = db_engine.connect()
 
-        db_film = f"select movietitle, year, price, directorname, language_name, genre_name, country_name "
-        db_film += f"from imdb_movies as m,languages as l,imdb_movielanguages as il, genres as g, imdb_moviegenres as ig, "
-        db_film += f"imdb_directors as d,imdb_directormovies as dm, imdb_moviecountries as ic, countries as c, products as p "
-        db_film += f"where p.movieid = m.movieid and l.language_id = il.language and m.movieid = il.movieid and g.genre_id = ig.genre "
+        db_film = f"select movietitle, year, price, directorname, language, genre, country "
+        db_film += f"from imdb_movies as m, imdb_movielanguages as il, imdb_moviegenres as ig, "
+        db_film += f"imdb_directors as d,imdb_directormovies as dm, imdb_moviecountries as ic, products as p "
+        db_film += f"where p.movieid = m.movieid and m.movieid = il.movieid "
         db_film += f"and ig.movieid = m.movieid and d.directorid = dm.directorid and m.movieid = dm.movieid and ic.movieid = m.movieid " 
-        db_film += f"and ic.country = c.country_id and m.movieid = '{film}'"
+        db_film += f"and m.movieid = '{film}'"
         
         db_result = db_conn.execute(db_film)
         db_conn.close()
@@ -149,8 +149,8 @@ def db_category(cat):
         db_conn = None
         db_conn = db_engine.connect()
 
-        db_cat = f"select m.movieid, movietitle from imdb_movies as m, imdb_moviegenres as ig, genres as g "
-        db_cat += f"where m.movieid = ig.movieid and ig.genre = g.genre_id and genre_name = '{cat}'"
+        db_cat = f"select m.movieid, movietitle from imdb_movies as m, imdb_moviegenres as ig "
+        db_cat += f"where m.movieid = ig.movieid and genre = '{cat}'"
         db_cat += f" fetch first 3 rows only"
         
         db_result = db_conn.execute(db_cat)
@@ -578,7 +578,7 @@ def db_getfechas(userid):
         return False
 
 
-def db_topventas():
+'''def db_topventas():
     try:
         # conexion a la base de datos
         db_conn = None
@@ -599,7 +599,7 @@ def db_topventas():
         traceback.print_exc(file=sys.stderr)
         print("-"*60)
 
-        return False
+        return False'''
 
 def db_getstock(prodid):
     try:
