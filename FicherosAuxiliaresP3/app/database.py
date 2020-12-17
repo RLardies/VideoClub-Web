@@ -145,23 +145,9 @@ def delCustomer(customerid, bFallo, bSQL, duerme, bCommit):
             sql = sqlalchemy.text(query1)
             db_conn.execute(sql)
             dbr.append("Borramos datos del cliente de Orderdetail")
-
-            if bCommit:
-                if bSQL:
-                    command = "COMMIT;"
-                    sql = sqlalchemy.text(command)
-                    db_conn.execute(sql)
-
-                    command = "BEGIN;"
-                    sql = sqlalchemy.text(command)
-                    db_conn.execute(sql)
-
-                    dbr.append("Realizamos COMMIT intermedio")
-                else:
-                    tr.commit()
-                    tr = db_conn.begin()
-                    dbr.append("Realizamos COMMIT intermedio")
-
+            
+            time.sleep(duerme)
+            
             sql = sqlalchemy.text(query2)
             db_conn.execute(sql)
             dbr.append("Borramos datos del cliente de Orders")
@@ -170,7 +156,6 @@ def delCustomer(customerid, bFallo, bSQL, duerme, bCommit):
             db_conn.execute(sql)
             dbr.append("Borramos datos del cliente de Costumers")
 
-        
 
     except Exception as e:
         
